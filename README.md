@@ -1,2 +1,2 @@
-# goat
+# Goat
 CMS REST API
