@@ -1,0 +1,23 @@
+{
+    "users": [
+        {
+            "username": "admin",
+            "email": "prochor666@gmail.com",
+            "password": "install",
+            "firstname": "System",
+            "lastname": "Administrator",
+            "active": 0,
+            "role": "admin"
+        }
+    ],
+    "history": [
+        {
+            "targetid": 0,
+            "type": "history-init",
+            "username": "",
+            "userid": 0,
+            "message": "History collection initialized",
+            "data": []
+        }
+    ]
+}

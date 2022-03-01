@@ -1,0 +1,10 @@
+config/app-config.php
+config/db-config.php
+config/mail-config.php
+.vscode
+.dots/*
+public/*
+storage/*
+temp/*
+vendor
+tests.php

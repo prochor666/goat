@@ -1,0 +1,11 @@
+{
+    "users": [
+        {
+            "username": "admin",
+            "email": "root@local.domain",
+            "firstname": "System",
+            "lastname": "Administrator",
+            "role": "admin"
+        }
+    ]
+}

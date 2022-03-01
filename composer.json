@@ -1,0 +1,13 @@
+{
+    "name": "prochor666/warp",
+    "description": "PHP libraries for Warp",
+    "license": "MIT",
+    "require": {
+        "twig/twig": "^3.3.3",
+        "phpoffice/phpspreadsheet": "^1.19.0",
+        "dompdf/dompdf": "^1.0.2",
+        "phpmailer/phpmailer": "^6.5.1",
+        "mpdf/mpdf": "^8.0.15",
+        "gabordemooij/redbean": "dev-master"
+    }
+}
