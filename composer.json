@@ -1,6 +1,6 @@
 {
-    "name": "prochor666/warp",
-    "description": "PHP libraries for Warp",
+    "name": "prochor666/goat",
+    "description": "PHP libraries for Goat CMS",
     "license": "MIT",
     "require": {
         "twig/twig": "^3.3.3",
