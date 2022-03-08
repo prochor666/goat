@@ -23,5 +23,8 @@ class MetaModel
     }
 
 
+    public function langCodes()
+    {
 
+    }
 }
