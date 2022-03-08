@@ -133,6 +133,10 @@ $config = [
             'class'     => 'Goat\Api\Directory',
             'method'    => 'setup',
         ],
+        'helpers' => [
+            'class' => 'Goat\Api\Helpers',
+            'method' => 'setup',
+        ],
     ],
 
     // Cli commands

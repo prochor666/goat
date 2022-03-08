@@ -1,0 +1,922 @@
+[
+    {
+        "name": "Afar",
+        "alpha2": "aa",
+        "alpha3-b": "aar"
+    },
+    {
+        "name": "Abkhazian",
+        "alpha2": "ab",
+        "alpha3-b": "abk"
+    },
+    {
+        "name": "Afrikaans",
+        "alpha2": "af",
+        "alpha3-b": "afr"
+    },
+    {
+        "name": "Akan",
+        "alpha2": "ak",
+        "alpha3-b": "aka"
+    },
+    {
+        "name": "Albanian",
+        "alpha2": "sq",
+        "alpha3-b": "alb"
+    },
+    {
+        "name": "Amharic",
+        "alpha2": "am",
+        "alpha3-b": "amh"
+    },
+    {
+        "name": "Arabic",
+        "alpha2": "ar",
+        "alpha3-b": "ara"
+    },
+    {
+        "name": "Aragonese",
+        "alpha2": "an",
+        "alpha3-b": "arg"
+    },
+    {
+        "name": "Armenian",
+        "alpha2": "hy",
+        "alpha3-b": "arm"
+    },
+    {
+        "name": "Assamese",
+        "alpha2": "as",
+        "alpha3-b": "asm"
+    },
+    {
+        "name": "Avaric",
+        "alpha2": "av",
+        "alpha3-b": "ava"
+    },
+    {
+        "name": "Avestan",
+        "alpha2": "ae",
+        "alpha3-b": "ave"
+    },
+    {
+        "name": "Aymara",
+        "alpha2": "ay",
+        "alpha3-b": "aym"
+    },
+    {
+        "name": "Azerbaijani",
+        "alpha2": "az",
+        "alpha3-b": "aze"
+    },
+    {
+        "name": "Bashkir",
+        "alpha2": "ba",
+        "alpha3-b": "bak"
+    },
+    {
+        "name": "Bambara",
+        "alpha2": "bm",
+        "alpha3-b": "bam"
+    },
+    {
+        "name": "Basque",
+        "alpha2": "eu",
+        "alpha3-b": "baq"
+    },
+    {
+        "name": "Belarusian",
+        "alpha2": "be",
+        "alpha3-b": "bel"
+    },
+    {
+        "name": "Bengali",
+        "alpha2": "bn",
+        "alpha3-b": "ben"
+    },
+    {
+        "name": "Bihari languages",
+        "alpha2": "bh",
+        "alpha3-b": "bih"
+    },
+    {
+        "name": "Bislama",
+        "alpha2": "bi",
+        "alpha3-b": "bis"
+    },
+    {
+        "name": "Bosnian",
+        "alpha2": "bs",
+        "alpha3-b": "bos"
+    },
+    {
+        "name": "Breton",
+        "alpha2": "br",
+        "alpha3-b": "bre"
+    },
+    {
+        "name": "Bulgarian",
+        "alpha2": "bg",
+        "alpha3-b": "bul"
+    },
+    {
+        "name": "Burmese",
+        "alpha2": "my",
+        "alpha3-b": "bur"
+    },
+    {
+        "name": "Catalan; Valencian",
+        "alpha2": "ca",
+        "alpha3-b": "cat"
+    },
+    {
+        "name": "Chamorro",
+        "alpha2": "ch",
+        "alpha3-b": "cha"
+    },
+    {
+        "name": "Chechen",
+        "alpha2": "ce",
+        "alpha3-b": "che"
+    },
+    {
+        "name": "Chinese",
+        "alpha2": "zh",
+        "alpha3-b": "chi"
+    },
+    {
+        "name": "Church Slavic; Old Slavonic; Church Slavonic; Old Bulgarian; Old Church Slavonic",
+        "alpha2": "cu",
+        "alpha3-b": "chu"
+    },
+    {
+        "name": "Chuvash",
+        "alpha2": "cv",
+        "alpha3-b": "chv"
+    },
+    {
+        "name": "Cornish",
+        "alpha2": "kw",
+        "alpha3-b": "cor"
+    },
+    {
+        "name": "Corsican",
+        "alpha2": "co",
+        "alpha3-b": "cos"
+    },
+    {
+        "name": "Cree",
+        "alpha2": "cr",
+        "alpha3-b": "cre"
+    },
+    {
+        "name": "Czech",
+        "alpha2": "cs",
+        "alpha3-b": "cze"
+    },
+    {
+        "name": "Danish",
+        "alpha2": "da",
+        "alpha3-b": "dan"
+    },
+    {
+        "name": "Divehi; Dhivehi; Maldivian",
+        "alpha2": "dv",
+        "alpha3-b": "div"
+    },
+    {
+        "name": "Dutch; Flemish",
+        "alpha2": "nl",
+        "alpha3-b": "dut"
+    },
+    {
+        "name": "Dzongkha",
+        "alpha2": "dz",
+        "alpha3-b": "dzo"
+    },
+    {
+        "name": "English",
+        "alpha2": "en",
+        "alpha3-b": "eng"
+    },
+    {
+        "name": "Esperanto",
+        "alpha2": "eo",
+        "alpha3-b": "epo"
+    },
+    {
+        "name": "Estonian",
+        "alpha2": "et",
+        "alpha3-b": "est"
+    },
+    {
+        "name": "Ewe",
+        "alpha2": "ee",
+        "alpha3-b": "ewe"
+    },
+    {
+        "name": "Faroese",
+        "alpha2": "fo",
+        "alpha3-b": "fao"
+    },
+    {
+        "name": "Fijian",
+        "alpha2": "fj",
+        "alpha3-b": "fij"
+    },
+    {
+        "name": "Finnish",
+        "alpha2": "fi",
+        "alpha3-b": "fin"
+    },
+    {
+        "name": "French",
+        "alpha2": "fr",
+        "alpha3-b": "fre"
+    },
+    {
+        "name": "Western Frisian",
+        "alpha2": "fy",
+        "alpha3-b": "fry"
+    },
+    {
+        "name": "Fulah",
+        "alpha2": "ff",
+        "alpha3-b": "ful"
+    },
+    {
+        "name": "Georgian",
+        "alpha2": "ka",
+        "alpha3-b": "geo"
+    },
+    {
+        "name": "German",
+        "alpha2": "de",
+        "alpha3-b": "ger"
+    },
+    {
+        "name": "Gaelic; Scottish Gaelic",
+        "alpha2": "gd",
+        "alpha3-b": "gla"
+    },
+    {
+        "name": "Irish",
+        "alpha2": "ga",
+        "alpha3-b": "gle"
+    },
+    {
+        "name": "Galician",
+        "alpha2": "gl",
+        "alpha3-b": "glg"
+    },
+    {
+        "name": "Manx",
+        "alpha2": "gv",
+        "alpha3-b": "glv"
+    },
+    {
+        "name": "Greek, Modern (1453-)",
+        "alpha2": "el",
+        "alpha3-b": "gre"
+    },
+    {
+        "name": "Guarani",
+        "alpha2": "gn",
+        "alpha3-b": "grn"
+    },
+    {
+        "name": "Gujarati",
+        "alpha2": "gu",
+        "alpha3-b": "guj"
+    },
+    {
+        "name": "Haitian; Haitian Creole",
+        "alpha2": "ht",
+        "alpha3-b": "hat"
+    },
+    {
+        "name": "Hausa",
+        "alpha2": "ha",
+        "alpha3-b": "hau"
+    },
+    {
+        "name": "Hebrew",
+        "alpha2": "he",
+        "alpha3-b": "heb"
+    },
+    {
+        "name": "Herero",
+        "alpha2": "hz",
+        "alpha3-b": "her"
+    },
+    {
+        "name": "Hindi",
+        "alpha2": "hi",
+        "alpha3-b": "hin"
+    },
+    {
+        "name": "Hiri Motu",
+        "alpha2": "ho",
+        "alpha3-b": "hmo"
+    },
+    {
+        "name": "Croatian",
+        "alpha2": "hr",
+        "alpha3-b": "hrv"
+    },
+    {
+        "name": "Hungarian",
+        "alpha2": "hu",
+        "alpha3-b": "hun"
+    },
+    {
+        "name": "Igbo",
+        "alpha2": "ig",
+        "alpha3-b": "ibo"
+    },
+    {
+        "name": "Icelandic",
+        "alpha2": "is",
+        "alpha3-b": "ice"
+    },
+    {
+        "name": "Ido",
+        "alpha2": "io",
+        "alpha3-b": "ido"
+    },
+    {
+        "name": "Sichuan Yi; Nuosu",
+        "alpha2": "ii",
+        "alpha3-b": "iii"
+    },
+    {
+        "name": "Inuktitut",
+        "alpha2": "iu",
+        "alpha3-b": "iku"
+    },
+    {
+        "name": "Interlingue; Occidental",
+        "alpha2": "ie",
+        "alpha3-b": "ile"
+    },
+    {
+        "name": "Interlingua (International Auxiliary Language Association)",
+        "alpha2": "ia",
+        "alpha3-b": "ina"
+    },
+    {
+        "name": "Indonesian",
+        "alpha2": "id",
+        "alpha3-b": "ind"
+    },
+    {
+        "name": "Inupiaq",
+        "alpha2": "ik",
+        "alpha3-b": "ipk"
+    },
+    {
+        "name": "Italian",
+        "alpha2": "it",
+        "alpha3-b": "ita"
+    },
+    {
+        "name": "Javanese",
+        "alpha2": "jv",
+        "alpha3-b": "jav"
+    },
+    {
+        "name": "Japanese",
+        "alpha2": "ja",
+        "alpha3-b": "jpn"
+    },
+    {
+        "name": "Kalaallisut; Greenlandic",
+        "alpha2": "kl",
+        "alpha3-b": "kal"
+    },
+    {
+        "name": "Kannada",
+        "alpha2": "kn",
+        "alpha3-b": "kan"
+    },
+    {
+        "name": "Kashmiri",
+        "alpha2": "ks",
+        "alpha3-b": "kas"
+    },
+    {
+        "name": "Kanuri",
+        "alpha2": "kr",
+        "alpha3-b": "kau"
+    },
+    {
+        "name": "Kazakh",
+        "alpha2": "kk",
+        "alpha3-b": "kaz"
+    },
+    {
+        "name": "Central Khmer",
+        "alpha2": "km",
+        "alpha3-b": "khm"
+    },
+    {
+        "name": "Kikuyu; Gikuyu",
+        "alpha2": "ki",
+        "alpha3-b": "kik"
+    },
+    {
+        "name": "Kinyarwanda",
+        "alpha2": "rw",
+        "alpha3-b": "kin"
+    },
+    {
+        "name": "Kirghiz; Kyrgyz",
+        "alpha2": "ky",
+        "alpha3-b": "kir"
+    },
+    {
+        "name": "Komi",
+        "alpha2": "kv",
+        "alpha3-b": "kom"
+    },
+    {
+        "name": "Kongo",
+        "alpha2": "kg",
+        "alpha3-b": "kon"
+    },
+    {
+        "name": "Korean",
+        "alpha2": "ko",
+        "alpha3-b": "kor"
+    },
+    {
+        "name": "Kuanyama; Kwanyama",
+        "alpha2": "kj",
+        "alpha3-b": "kua"
+    },
+    {
+        "name": "Kurdish",
+        "alpha2": "ku",
+        "alpha3-b": "kur"
+    },
+    {
+        "name": "Lao",
+        "alpha2": "lo",
+        "alpha3-b": "lao"
+    },
+    {
+        "name": "Latin",
+        "alpha2": "la",
+        "alpha3-b": "lat"
+    },
+    {
+        "name": "Latvian",
+        "alpha2": "lv",
+        "alpha3-b": "lav"
+    },
+    {
+        "name": "Limburgan; Limburger; Limburgish",
+        "alpha2": "li",
+        "alpha3-b": "lim"
+    },
+    {
+        "name": "Lingala",
+        "alpha2": "ln",
+        "alpha3-b": "lin"
+    },
+    {
+        "name": "Lithuanian",
+        "alpha2": "lt",
+        "alpha3-b": "lit"
+    },
+    {
+        "name": "Luxembourgish; Letzeburgesch",
+        "alpha2": "lb",
+        "alpha3-b": "ltz"
+    },
+    {
+        "name": "Luba-Katanga",
+        "alpha2": "lu",
+        "alpha3-b": "lub"
+    },
+    {
+        "name": "Ganda",
+        "alpha2": "lg",
+        "alpha3-b": "lug"
+    },
+    {
+        "name": "Macedonian",
+        "alpha2": "mk",
+        "alpha3-b": "mac"
+    },
+    {
+        "name": "Marshallese",
+        "alpha2": "mh",
+        "alpha3-b": "mah"
+    },
+    {
+        "name": "Malayalam",
+        "alpha2": "ml",
+        "alpha3-b": "mal"
+    },
+    {
+        "name": "Maori",
+        "alpha2": "mi",
+        "alpha3-b": "mao"
+    },
+    {
+        "name": "Marathi",
+        "alpha2": "mr",
+        "alpha3-b": "mar"
+    },
+    {
+        "name": "Malay",
+        "alpha2": "ms",
+        "alpha3-b": "may"
+    },
+    {
+        "name": "Malagasy",
+        "alpha2": "mg",
+        "alpha3-b": "mlg"
+    },
+    {
+        "name": "Maltese",
+        "alpha2": "mt",
+        "alpha3-b": "mlt"
+    },
+    {
+        "name": "Mongolian",
+        "alpha2": "mn",
+        "alpha3-b": "mon"
+    },
+    {
+        "name": "Nauru",
+        "alpha2": "na",
+        "alpha3-b": "nau"
+    },
+    {
+        "name": "Navajo; Navaho",
+        "alpha2": "nv",
+        "alpha3-b": "nav"
+    },
+    {
+        "name": "Ndebele, South; South Ndebele",
+        "alpha2": "nr",
+        "alpha3-b": "nbl"
+    },
+    {
+        "name": "Ndebele, North; North Ndebele",
+        "alpha2": "nd",
+        "alpha3-b": "nde"
+    },
+    {
+        "name": "Ndonga",
+        "alpha2": "ng",
+        "alpha3-b": "ndo"
+    },
+    {
+        "name": "Nepali",
+        "alpha2": "ne",
+        "alpha3-b": "nep"
+    },
+    {
+        "name": "Norwegian Nynorsk; Nynorsk, Norwegian",
+        "alpha2": "nn",
+        "alpha3-b": "nno"
+    },
+    {
+        "name": "Bokm\u00e5l, Norwegian; Norwegian Bokm\u00e5l",
+        "alpha2": "nb",
+        "alpha3-b": "nob"
+    },
+    {
+        "name": "Norwegian",
+        "alpha2": "no",
+        "alpha3-b": "nor"
+    },
+    {
+        "name": "Chichewa; Chewa; Nyanja",
+        "alpha2": "ny",
+        "alpha3-b": "nya"
+    },
+    {
+        "name": "Occitan (post 1500)",
+        "alpha2": "oc",
+        "alpha3-b": "oci"
+    },
+    {
+        "name": "Ojibwa",
+        "alpha2": "oj",
+        "alpha3-b": "oji"
+    },
+    {
+        "name": "Oriya",
+        "alpha2": "or",
+        "alpha3-b": "ori"
+    },
+    {
+        "name": "Oromo",
+        "alpha2": "om",
+        "alpha3-b": "orm"
+    },
+    {
+        "name": "Ossetian; Ossetic",
+        "alpha2": "os",
+        "alpha3-b": "oss"
+    },
+    {
+        "name": "Panjabi; Punjabi",
+        "alpha2": "pa",
+        "alpha3-b": "pan"
+    },
+    {
+        "name": "Persian",
+        "alpha2": "fa",
+        "alpha3-b": "per"
+    },
+    {
+        "name": "Pali",
+        "alpha2": "pi",
+        "alpha3-b": "pli"
+    },
+    {
+        "name": "Polish",
+        "alpha2": "pl",
+        "alpha3-b": "pol"
+    },
+    {
+        "name": "Portuguese",
+        "alpha2": "pt",
+        "alpha3-b": "por"
+    },
+    {
+        "name": "Pushto; Pashto",
+        "alpha2": "ps",
+        "alpha3-b": "pus"
+    },
+    {
+        "name": "Quechua",
+        "alpha2": "qu",
+        "alpha3-b": "que"
+    },
+    {
+        "name": "Romansh",
+        "alpha2": "rm",
+        "alpha3-b": "roh"
+    },
+    {
+        "name": "Romanian; Moldavian; Moldovan",
+        "alpha2": "ro",
+        "alpha3-b": "rum"
+    },
+    {
+        "name": "Rundi",
+        "alpha2": "rn",
+        "alpha3-b": "run"
+    },
+    {
+        "name": "Russian",
+        "alpha2": "ru",
+        "alpha3-b": "rus"
+    },
+    {
+        "name": "Sango",
+        "alpha2": "sg",
+        "alpha3-b": "sag"
+    },
+    {
+        "name": "Sanskrit",
+        "alpha2": "sa",
+        "alpha3-b": "san"
+    },
+    {
+        "name": "Sinhala; Sinhalese",
+        "alpha2": "si",
+        "alpha3-b": "sin"
+    },
+    {
+        "name": "Slovak",
+        "alpha2": "sk",
+        "alpha3-b": "slo"
+    },
+    {
+        "name": "Slovenian",
+        "alpha2": "sl",
+        "alpha3-b": "slv"
+    },
+    {
+        "name": "Northern Sami",
+        "alpha2": "se",
+        "alpha3-b": "sme"
+    },
+    {
+        "name": "Samoan",
+        "alpha2": "sm",
+        "alpha3-b": "smo"
+    },
+    {
+        "name": "Shona",
+        "alpha2": "sn",
+        "alpha3-b": "sna"
+    },
+    {
+        "name": "Sindhi",
+        "alpha2": "sd",
+        "alpha3-b": "snd"
+    },
+    {
+        "name": "Somali",
+        "alpha2": "so",
+        "alpha3-b": "som"
+    },
+    {
+        "name": "Sotho, Southern",
+        "alpha2": "st",
+        "alpha3-b": "sot"
+    },
+    {
+        "name": "Spanish; Castilian",
+        "alpha2": "es",
+        "alpha3-b": "spa"
+    },
+    {
+        "name": "Sardinian",
+        "alpha2": "sc",
+        "alpha3-b": "srd"
+    },
+    {
+        "name": "Serbian",
+        "alpha2": "sr",
+        "alpha3-b": "srp"
+    },
+    {
+        "name": "Swati",
+        "alpha2": "ss",
+        "alpha3-b": "ssw"
+    },
+    {
+        "name": "Sundanese",
+        "alpha2": "su",
+        "alpha3-b": "sun"
+    },
+    {
+        "name": "Swahili",
+        "alpha2": "sw",
+        "alpha3-b": "swa"
+    },
+    {
+        "name": "Swedish",
+        "alpha2": "sv",
+        "alpha3-b": "swe"
+    },
+    {
+        "name": "Tahitian",
+        "alpha2": "ty",
+        "alpha3-b": "tah"
+    },
+    {
+        "name": "Tamil",
+        "alpha2": "ta",
+        "alpha3-b": "tam"
+    },
+    {
+        "name": "Tatar",
+        "alpha2": "tt",
+        "alpha3-b": "tat"
+    },
+    {
+        "name": "Telugu",
+        "alpha2": "te",
+        "alpha3-b": "tel"
+    },
+    {
+        "name": "Tajik",
+        "alpha2": "tg",
+        "alpha3-b": "tgk"
+    },
+    {
+        "name": "Tagalog",
+        "alpha2": "tl",
+        "alpha3-b": "tgl"
+    },
+    {
+        "name": "Thai",
+        "alpha2": "th",
+        "alpha3-b": "tha"
+    },
+    {
+        "name": "Tibetan",
+        "alpha2": "bo",
+        "alpha3-b": "tib"
+    },
+    {
+        "name": "Tigrinya",
+        "alpha2": "ti",
+        "alpha3-b": "tir"
+    },
+    {
+        "name": "Tonga (Tonga Islands)",
+        "alpha2": "to",
+        "alpha3-b": "ton"
+    },
+    {
+        "name": "Tswana",
+        "alpha2": "tn",
+        "alpha3-b": "tsn"
+    },
+    {
+        "name": "Tsonga",
+        "alpha2": "ts",
+        "alpha3-b": "tso"
+    },
+    {
+        "name": "Turkmen",
+        "alpha2": "tk",
+        "alpha3-b": "tuk"
+    },
+    {
+        "name": "Turkish",
+        "alpha2": "tr",
+        "alpha3-b": "tur"
+    },
+    {
+        "name": "Twi",
+        "alpha2": "tw",
+        "alpha3-b": "twi"
+    },
+    {
+        "name": "Uighur; Uyghur",
+        "alpha2": "ug",
+        "alpha3-b": "uig"
+    },
+    {
+        "name": "Ukrainian",
+        "alpha2": "uk",
+        "alpha3-b": "ukr"
+    },
+    {
+        "name": "Urdu",
+        "alpha2": "ur",
+        "alpha3-b": "urd"
+    },
+    {
+        "name": "Uzbek",
+        "alpha2": "uz",
+        "alpha3-b": "uzb"
+    },
+    {
+        "name": "Venda",
+        "alpha2": "ve",
+        "alpha3-b": "ven"
+    },
+    {
+        "name": "Vietnamese",
+        "alpha2": "vi",
+        "alpha3-b": "vie"
+    },
+    {
+        "name": "Volap\u00fck",
+        "alpha2": "vo",
+        "alpha3-b": "vol"
+    },
+    {
+        "name": "Welsh",
+        "alpha2": "cy",
+        "alpha3-b": "wel"
+    },
+    {
+        "name": "Walloon",
+        "alpha2": "wa",
+        "alpha3-b": "wln"
+    },
+    {
+        "name": "Wolof",
+        "alpha2": "wo",
+        "alpha3-b": "wol"
+    },
+    {
+        "name": "Xhosa",
+        "alpha2": "xh",
+        "alpha3-b": "xho"
+    },
+    {
+        "name": "Yiddish",
+        "alpha2": "yi",
+        "alpha3-b": "yid"
+    },
+    {
+        "name": "Yoruba",
+        "alpha2": "yo",
+        "alpha3-b": "yor"
+    },
+    {
+        "name": "Zhuang; Chuang",
+        "alpha2": "za",
+        "alpha3-b": "zha"
+    },
+    {
+        "name": "Zulu",
+        "alpha2": "zu",
+        "alpha3-b": "zul"
+    }
+]
