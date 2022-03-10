@@ -147,25 +147,24 @@ trait Validator
     * @param array $subvalidator
     * @return bool
     */
-    public function arrayOf($value, $subvalidator = []): bool
+    public function arrayOf($value, $options = []): bool
     {
         if (!is_array($value)) {
 
             return false;
         }
 
-        $validation_method = ark($subvalidator, 'validation_method', false);
-        $options = ark($subvalidator, 'options', false);
+        $validation_method = ark($options, 'validation_method', false);
 
         if ($validation_method !== false) {
 
             foreach($value as $v) {
 
-                if ($options === false && call_user_func_array([$this, $validation_method], [$v]) === false) {
+                if (!is_array($options) && call_user_func_array([$this, $validation_method], [$v]) === false) {
 
                     return false;
 
-                } elseif ($options === false && call_user_func_array([$this, $validation_method], [$v, $options]) === false) {
+                } elseif (call_user_func_array([$this, $validation_method], [$v, $options]) === false) {
 
                     return false;
                 }
@@ -200,6 +199,32 @@ trait Validator
             }
 
             return true;
+        }
+
+        return false;
+    }
+
+
+    /**
+    * Validate lang alpha2 code value
+    * As the options, the ISO-639 array is required
+    * JSON sample:
+    * [{
+    *     "name": "English",
+    *     "alpha2": "en",
+    *     "alpha3-b": "eng"
+    * }]
+    * @param mixed $value
+    * @param array $options
+    * @return bool
+    */
+    public function lang($value, $options = []): bool
+    {
+        $langs = ark($options, 'langs', []);
+
+        if (array_search($value, array_column($langs, 'alpha2')) !== false) {
+
+           return true;
         }
 
         return false;

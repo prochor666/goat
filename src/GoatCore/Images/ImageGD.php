@@ -2,10 +2,10 @@
 namespace GoatCore\Images;
 
 /**
-* GoatCore\Image - image manipulation class, resize/convert/save images
+* GoatCore\ImageGD - image manipulation class based on GD lib, resize/convert/save images
 * @author Jan Prochazka, prochor666 <prochor666@gmail.com>
 */
-class Image
+class ImageGD
 {
     public $imageSource, $imageTarget, $compression, $permissions, $fixExifRotation;
     protected $image, $imageInfo, $imageType, $exif;
@@ -376,7 +376,7 @@ class Image
     */
     public function resize($width, $height)
     {
-        $imageResized = imagecreatetruecolor($width, $height);
+        $imageResized = imagecreatetruecolor((int) $width, (int) $height);
 
         if (($this->imageType == IMAGETYPE_GIF) || ($this->imageType == IMAGETYPE_PNG)) {
 

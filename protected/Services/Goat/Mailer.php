@@ -17,12 +17,6 @@ class Mailer
     }
 
 
-    public function confiure($config)
-    {
-        $this->config = $config;
-    }
-
-
     public function send($data)
     {
         try {

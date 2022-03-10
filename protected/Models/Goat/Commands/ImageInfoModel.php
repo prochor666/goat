@@ -24,7 +24,7 @@ class ImageInfoModel
     {
         $this->app = $app;
         $this->input = $input;
-        $this->imageService = $this->app->store->entry('GoatCore\Images\ImageMagick');
+        $this->imageService = $this->app->store->entry('Goat\Image');
     }
 
 

@@ -4,7 +4,6 @@ use GoatCore\Base\Store;
 use GoatCore\Cli\ShellCommand;
 use GoatCore\Db\Db;
 use GoatCore\GoatCore;
-use GoatCore\Images\ImageMagick;
 
 Autoloader::init()->register([
     GOAT_ROOT . '/protected/Controllers',
@@ -42,7 +41,9 @@ $goatCore->config($config);
 $command = new ShellCommand($argv);
 $goatCore->store->entry($command);
 $goatCore->store->entry(new Db($goatCore->config('database')));
-$goatCore->store->entry(new ImageMagick());
+$goatCore->store->entry(
+    new Goat\Image($goatCore->config('image')['useImageMagick'])
+);
 
 /* ***************
 | Site run

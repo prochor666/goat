@@ -219,7 +219,7 @@ class FileUploadModel extends BasicAssetModel
             $input = $this->extend($input, 'update');
             $updated = $this->assets->update($id, $input);
 
-            if ($created > 0) {
+            if ($updated > 0) {
 
                 // Save finilaized file into db
                 return [

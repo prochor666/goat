@@ -404,8 +404,8 @@ class ImageMagick
     public function resize($width, $height)
     {
         $this->image->resizeImage(
-            $width,
-            $height,
+            (int) $width,
+            (int) $height,
             \imagick::FILTER_UNDEFINED,
             0,
             false,

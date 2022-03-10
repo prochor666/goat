@@ -75,13 +75,13 @@ if ($uri !== '/' && file_exists(__DIR__."{$uri}")) {
 
         header('Content-Description: File Transfer');
         header('Content-Type: application/octet-stream');
-        header('Content-Disposition: attachment; filename=' . $quoted);
+        header('Content-Disposition: attachment; filename=' . $_quoted);
         header('Content-Transfer-Encoding: binary');
         header('Connection: Keep-Alive');
         header('Expires: 0');
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
         header('Pragma: public');
-        header('Content-Length: ' . $size);
+        header('Content-Length: ' . $_size);
         readfile(__DIR__."{$uri}");
         die();
     }

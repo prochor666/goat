@@ -4,8 +4,6 @@ use GoatCore\Base\Store;
 use GoatCore\Events\Queue;
 use GoatCore\Http\Route;
 use GoatCore\Http\Url;
-use GoatCore\Images\Image;
-use GoatCore\Images\ImageMagick;
 use GoatCore\Db\Db;
 use GoatCore\GoatCore;
 
@@ -19,11 +17,6 @@ Autoloader::init()->register([
 ]);
 
 use Goat\Hub;
-use Goat\Mailer;
-use Goat\Session;
-use Goat\Storage;
-use Goat\Thumbnail;
-
 use PHPMailer\PHPMailer\PHPMailer;
 
 date_default_timezone_set('UTC');
@@ -62,7 +55,7 @@ session_set_cookie_params([
 ]);
 
 $goatCore->store->entry(new Queue);
-$goatCore->store->entry(new Mailer(
+$goatCore->store->entry(new Goat\Mailer(
     $goatCore->config('email'), new PHPMailer(true))
 );
 $goatCore->store->entry(new Url);
@@ -73,36 +66,22 @@ $goatCore->store->entry(
     new Db($goatCore->config('database'))
 );
 $goatCore->store->entry(
-    new Storage($goatCore->config('fsRoot'))
+    new Goat\Storage($goatCore->config('fsRoot'))
 );
-
-if ($goatCore->config('image')['useImageMagick'] === true) {
-
-    $goatCore->store->entry(
-        new ImageMagick()
-    );
-    $goatCore->store->entry(
-        new Thumbnail(
-            $goatCore->config('image'),
-            $goatCore->store->entry('GoatCore\Images\ImageMagick'),
-            $goatCore->store->entry('Goat\Storage'))
-    );
-
-} else {
-
-    $goatCore->store->entry(
-        new Image()
-    );
-
-    $goatCore->store->entry(
-        new Thumbnail(
-            $goatCore->config('image'),
-            $goatCore->store->entry('GoatCore\Images\Image'),
-            $goatCore->store->entry('Goat\Storage'))
-    );
-}
 $goatCore->store->entry(
-    new Session()
+    new Goat\Image($goatCore->config('image')['useImageMagick'])
+);
+$goatCore->store->entry(
+    new Goat\Thumbnail(
+        $goatCore->config('image'),
+        $goatCore->store->entry('Goat\Image'),
+        $goatCore->store->entry('Goat\Storage'))
+);
+$goatCore->store->entry(
+    new Goat\Session()
+);
+$goatCore->store->entry(
+    new Goat\Lang()
 );
 
 /* ***************

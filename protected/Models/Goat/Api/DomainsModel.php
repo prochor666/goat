@@ -33,6 +33,20 @@ class DomainsModel extends BasicAssetModel
                 'default'              => 0,
                 'options'              => ['min' => 0, 'max' => 1],
             ],
+            'langs' => [
+                'validation_method'    => 'arrayOf',
+                'default'              => [
+                    'en',
+                ],
+                'options'              => [
+                    'validation_method' => 'lang',
+                ]
+            ],
+            'lang_default' => [
+                'validation_method'    => 'string',
+                'default'              => 'en',
+                'options'              => ['min' => 1, 'max' => 255],
+            ],
             'aliases' => [
                 'validation_method'    => 'arrayOf',
                 'default'              => [],
@@ -95,7 +109,9 @@ class DomainsModel extends BasicAssetModel
 
         // Related values for dommain aliases
         $aliases = $input['aliases'];
+        $langs = $input['langs'];
         unset($input['aliases']);
+        unset($input['langs']);
 
         $created = $this->assets->create($input);
 
@@ -103,11 +119,13 @@ class DomainsModel extends BasicAssetModel
 
             $domain = $this->createDomainRelation($created);
             $aliasesList = $this->saveDomainAliasesList($aliases, $domain);
+            $langsList = $this->saveDomainLangsList($langs, $domain);
             //$aliasesList = [];
 
             return [
                 'created' => $created,
-                'aliases' => $aliasesList
+                'aliases' => $aliasesList,
+                'langs'   => $langsList,
             ];
         }
 
@@ -168,7 +186,9 @@ class DomainsModel extends BasicAssetModel
 
         // Related values for dommain aliases
         $aliases = $input['aliases'];
+        $langs = $input['langs'];
         unset($input['aliases']);
+        unset($input['langs']);
 
         $updated = $this->assets->update($id, $input);
 
@@ -176,10 +196,12 @@ class DomainsModel extends BasicAssetModel
 
             $domain = $this->createDomainRelation($updated);
             $aliasesList = $this->saveDomainAliasesList($aliases, $domain);
+            $langsList = $this->saveDomainLangsList($langs, $domain);
 
             return [
                 'updated' => $updated,
-                'aliases' => $aliasesList
+                'aliases' => $aliasesList,
+                'langs'   => $langsList,
             ];
         }
 
@@ -306,6 +328,59 @@ class DomainsModel extends BasicAssetModel
             'domain'          => $domain,
             'exists'          => $exists,
             'created'         => count($newAliasList),
+        ];
+    }
+
+
+    /**
+    * Save domain languages
+    * @param array $langs
+    * @param object $domain
+    * @return array
+    */
+    protected function saveDomainLangsList($langs, $domain): array
+    {
+        $exists = 0;
+        $newLangList = [];
+
+        $relatedLangs = $this->assets->getRelated($domain, 'langs');
+
+        if (count($relatedLangs)>0) {
+
+            // Iterate over the existing aliases
+            foreach ($relatedLangs as $key => $obj) {
+
+                $sid = array_search($obj->host, $langs);
+
+                if ($sid !== false) {
+
+                    unset($langs[$sid]);
+                } else {
+
+                    $temporaryType = $this->assets->swapType('langs');
+                    $this->assets->delete($obj->id);
+                    $this->assets->swapType($temporaryType);
+                }
+            }
+
+            $this->assets->save($domain);
+        }
+
+        // Iterate over the pushed aliases
+        foreach($langs as $value) {
+
+            // Create if not exist
+            $newLangList[] = $this->extend(['alpha2' => $value], 'create');
+        }
+
+        $this->assets->oneToMany($domain, 'langs', $newLangList);
+
+        return [
+            'newLangList'    => $newLangList,
+            'relatedLangs'  => $relatedLangs,
+            'domain'          => $domain,
+            'exists'          => $exists,
+            'created'         => count($newLangList),
         ];
     }
 
