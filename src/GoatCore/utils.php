@@ -8,7 +8,7 @@
 function rnd($length = 5, $numOnly = false)
 {
     $args = $numOnly === true ? '0123456789': 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    $str = null;
+    $str = '';
 
     while (strlen($str) < $length) {
 

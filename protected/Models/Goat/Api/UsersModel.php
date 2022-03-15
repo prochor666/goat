@@ -68,6 +68,7 @@ class UsersModel extends BasicAssetModel
             return [
                 'error' => "Invalid dataset",
                 'input' => $input,
+                'method' => 'post',
             ];
         }
 
@@ -115,6 +116,7 @@ class UsersModel extends BasicAssetModel
             return [
                'error' => "Invalid dataset",
                'input' => $input,
+               'method' => 'put',
             ];
         }
 
@@ -159,6 +161,7 @@ class UsersModel extends BasicAssetModel
             return [
                 'error' => "Invalid dataset",
                 'input' => $input,
+                'method' => 'patch',
             ];
         }
 
