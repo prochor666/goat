@@ -56,12 +56,27 @@ $config = [
         ],
     ],
 
+    'lang' => [
+        'reduce' => [
+            'en', 'cs', 'de', 'fr', 'es', 'it', 'sv', 'fi', 'no', 'sk',
+        ]
+    ],
 
     // User roles
     'roles' => [
-        'admin',
-        'user',
-        'block',
+        'restricted' => [
+            'role' => 'restricted',
+            'name' => 'Restricted',
+        ],
+        'user' => [
+            'role' => 'user',
+            'name' => 'User',
+        ],
+        'admin' => [
+            'role' => 'admin',
+            'name' => 'Administrator',
+        ],
+
     ],
 
     // Password complexity level

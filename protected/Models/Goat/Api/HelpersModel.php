@@ -27,7 +27,7 @@ class HelpersModel
 
     public function langs($input = [])
     {
-        $data = [
+        $result = [
             'langs' => [
                 [
                     'name'     => 'English',
@@ -46,29 +46,31 @@ class HelpersModel
 
             try {
 
-                $data['langs'] = $this->langService->loadAll(
+                $result['langs'] = $this->langService->loadAll(
                                         json_decode($this->storageService->readFile($this->resources['langFile']), true), $reduce);
-                $data['status'] = true;
-                $data['message'] = count($reduce) > 0 ? 'Ok, reduced dataset sent': 'Ok, full dataset sent';
+                $result['status'] = true;
+                $result['message'] = count($reduce) > 0 ? 'Ok, reduced dataset sent': 'Ok, full dataset sent';
 
             }catch (\Exception $e) {
 
-                $data['status'] = false;
-                $data['message'] = 'Error parsing ISO-639.json file, setting up defaults';
+                $result['status'] = false;
+                $result['message'] = 'Error parsing ISO-639.json file, setting up defaults';
 
-                return $data;
+                return $result;
             }
         }
 
-        return $data;
+        return $result;
     }
 
 
     public function roles($input = [])
     {
         $result = [
-            'data' => $this->app->config('roles'),
+            'roles' => $this->app->config('roles'),
             'status' => true,
         ];
+
+        return $result;
     }
 }
