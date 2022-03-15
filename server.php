@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 function _devPHPServerAccessLogger($httpStatus = 'Unknown')
 {
     $dateTime = date('Y-m-d H:i:s');
@@ -55,10 +58,13 @@ if ($uri !== '/' && preg_match('/\.(?:php)$/', $uri)) {
     return false;
 }
 
+$fsPath = __DIR__ . str_replace('/', DIRECTORY_SEPARATOR, dirname($uri)) . DIRECTORY_SEPARATOR . urlencode(basename($uri));
 
-if ($uri !== '/' && file_exists(__DIR__."{$uri}")) {
+//echo $fsPath;
 
-    if (is_dir(__DIR__."{$uri}")) {
+if ($uri !== '/' && file_exists($fsPath)) {
+
+    if (is_dir($fsPath)) {
 
         $httpStatus = "HTTP/1.1 204 No Content";
         _devPHPServerAccessLogger($httpStatus);
@@ -66,7 +72,7 @@ if ($uri !== '/' && file_exists(__DIR__."{$uri}")) {
         die();
     }
 
-    if (!preg_match('/\.(?:ico|png|jpg|jpeg|gif|bmp|wbmp|webp|html|html|xml|pls|m3u8|js|css|scss|txt|vaw|mp3|mp4|m4v)$/', $uri)) {
+    if (!preg_match('/\.(?:ico|png|jpg|jpeg|gif|bmp|wbmp|webp|html|html|xml|pls|m3u8|js|css|scss|txt|vaw|mp3|mp4|m4v)$/', $fsPath)) {
 
         _devPHPServerAccessLogger($httpStatus);
 
@@ -82,7 +88,7 @@ if ($uri !== '/' && file_exists(__DIR__."{$uri}")) {
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
         header('Pragma: public');
         header('Content-Length: ' . $_size);
-        readfile(__DIR__."{$uri}");
+        readfile($fsPath);
         die();
     }
 

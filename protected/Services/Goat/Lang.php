@@ -1,7 +1,6 @@
 <?php
 namespace Goat;
 
-
 class Lang
 {
     protected $lang;
@@ -15,6 +14,7 @@ class Lang
     /**
     * Configure lang alpha2 code values
     * ISO-639 array is required
+    * https://datahub.io/core/language-codes#readme
     * JSON sample:
     * [{
     *     "name": "English",
@@ -22,17 +22,22 @@ class Lang
     *     "alpha3-b": "eng"
     * }]
     */
-    public function loadAll($config)
+    public function loadAll($data, $reduce = [])
     {
-        foreach ($config as $key => $lang) {
+        foreach ($data as $key => $lang) {
 
             if (!ark($lang, 'alpha2', false)) {
 
-                unset($config[$key]);
+                unset($data[$key]);
             }
         }
 
-        return $config;
+        if (is_array($reduce) && count($reduce) > 0) {
+
+            $data = $this->subset($data, $reduce);
+        }
+
+        return $data;
     }
 
 
@@ -45,5 +50,19 @@ class Lang
     public function t($key)
     {
         return ark($this->lang, $key, $key);
+    }
+
+
+    protected function subset($data, $reduce)
+    {
+        foreach ($data as $key => $item)
+        {
+            if (!in_array(ark($item, 'alpha2', '-'), $reduce)) {
+
+                unset($data[$key]);
+            }
+        }
+
+        return $data;
     }
 }

@@ -40,8 +40,8 @@ class Helpers implements IApiController
         switch (strtolower($this->method)) {
 
             case 'get':
-                $helper = (int)$route->index($route->count() - 1);
-                $this->data = $this->model->$helper();
+                $helper = (string)$route->index($route->count() - 1);
+                $this->data = $this->model->$helper($_GET);
 
                 break;
 

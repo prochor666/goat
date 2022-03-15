@@ -20,16 +20,16 @@ class UsersModel extends BasicAssetModel
         $this->predefined = [
             'username' => [
                 'validation_method'    => 'string',
-                'default'              => '',
+                'required'             => true,
                 'options'              => ['min' => 3, 'max' => 255],
             ],
             'email' => [
                 'validation_method'    => 'email',
-                'default'              => '',
+                'required'              => true,
             ],
             'password' => [
                 'validation_method'    => 'password',
-                'default'              => '',
+                'required'             => true,
                 'options'              => ['level' => (int)$this->app->config('passwordSecurity')],
             ],
             'firstname' => [
@@ -66,7 +66,8 @@ class UsersModel extends BasicAssetModel
         if ($invalid === true) {
 
             return [
-                'error' => "Invalid dataset"
+                'error' => "Invalid dataset",
+                'input' => $input,
             ];
         }
 
@@ -79,6 +80,7 @@ class UsersModel extends BasicAssetModel
 
             return [
                 'error' => "{$existsKey} already exists",
+                'input' => $input,
             ];
         }
 
@@ -111,7 +113,8 @@ class UsersModel extends BasicAssetModel
         if ($invalid === true) {
 
             return [
-               'error' => "Invalid dataset"
+               'error' => "Invalid dataset",
+               'input' => $input,
             ];
         }
 
@@ -145,6 +148,7 @@ class UsersModel extends BasicAssetModel
     */
     public function patch($id, $input): array
     {
+        unset($this->predefined['password']);
         $input = $this->normalize($input);
 
         // Check data completition
@@ -153,7 +157,8 @@ class UsersModel extends BasicAssetModel
         if ($invalid === true) {
 
             return [
-                'error' => "Invalid dataset"
+                'error' => "Invalid dataset",
+                'input' => $input,
             ];
         }
 

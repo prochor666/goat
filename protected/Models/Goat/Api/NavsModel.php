@@ -20,7 +20,7 @@ class NavsModel extends BasicAssetModel
         $this->predefined = [
             'name' => [
                 'validation_method'    => 'string',
-                'default'              => '',
+                'required'             => true,
                 'options'              => ['min' => 1, 'max' => 255],
             ],
             'order' => [
@@ -128,7 +128,7 @@ class NavsModel extends BasicAssetModel
         }
 
         // Check same nav name and exclude updated id
-        $exists = $this->exists(' name LIKE ? AND id != ? ', [$input['name'], $id]);
+        $exists = $this->exists(' name LIKE ? AND domains_id = ? AND id != ? ', [$input['name'], $input['domains_id'], $id]);
 
         if ($exists === true) {
 
@@ -190,7 +190,7 @@ class NavsModel extends BasicAssetModel
         if (ark($input, 'name', false) !== false) {
 
             // Check same nav name and exclude updated id
-            $exists = $this->exists(' name LIKE ? AND id != ? ', [$input['name'], $id]);
+            $exists = $this->exists(' name LIKE ? AND domains_id = ? AND id != ? ', [$input['name'], $input['domains_id'], $id]);
 
             if ($exists === true) {
 

@@ -74,6 +74,7 @@ class Domains implements IApiController
 
                     $this->data = $this->model->one($id);
                     $this->model->related($this->data, 'aliases');
+                    $this->model->related($this->data, 'langs');
                 } else {
 
                     $input = !empty($_GET) ? $_GET: [];

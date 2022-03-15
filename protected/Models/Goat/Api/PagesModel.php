@@ -20,7 +20,7 @@ class PagesModel extends BasicAssetModel
         $this->predefined = [
             'name' => [
                 'validation_method'    => 'string',
-                'default'              => '',
+                'required'             => true,
                 'options'              => ['min' => 1, 'max' => 255],
             ],
             'title' => [
@@ -30,7 +30,7 @@ class PagesModel extends BasicAssetModel
             ],
             'slug' => [
                 'validation_method'    => 'string',
-                'default'              => '',
+                'required'             => true,
                 'options'              => ['min' => 1, 'max' => 255],
             ],
             'description' => [
@@ -55,12 +55,12 @@ class PagesModel extends BasicAssetModel
             ],
             'domains_id' => [
                 'validation_method'    => 'int',
-                'default'              => 1,
+                'required'             => true,
                 'options'              => ['min' => 1],
             ],
             'navs_id' => [
                 'validation_method'    => 'int',
-                'default'              => 1,
+                'required'             => true,
                 'options'              => ['min' => 1],
             ],
             'public' => [

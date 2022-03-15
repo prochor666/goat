@@ -18,6 +18,8 @@ class BasicAssetModel
 
     protected $predefined;
 
+    protected $messages;
+
     use \GoatCore\Traits\Validator;
     use \Goat\History;
 
@@ -26,6 +28,7 @@ class BasicAssetModel
         $this->app = $app;
         $this->assets = $assets;
         $this->predefined = [];
+        $this->messages = [];
     }
 
 
@@ -111,27 +114,89 @@ class BasicAssetModel
     {
         foreach($this->predefined as $prop => $setup) {
 
-            $inputProp = ark($input, $prop, false);
+            $inputPropertyValue = ark($input, $prop, false);
+            $required = ark($setup, 'required', false);
+            $default = ark($setup, 'default', false);
+            $validationMethod = ark($setup, 'validation_method', false);
+            $options = ark($setup, 'options', false);
 
-            if ($setDefaults === true && $inputProp === false) {
+            if ($setDefaults === true && $inputPropertyValue === false && $default !== false) {
 
-                $inputProp = $setup['default'];
+                // Set default value
+                $inputPropertyValue = $default;
             }
 
-            if ($inputProp !== false) {
+            $validate = false;
 
-                if (!isset($setup['options']) || $setup['options'] === false) {
 
-                    $input[$prop] = call_user_func_array([$this, $setup['validation_method']], [$inputProp]) ? $inputProp: false;
+            // Allow empty value, when required is false
+            if ($required === false && $inputPropertyValue !== false && is_callable([$this, $validationMethod]) && $this->isEmptyValue($inputPropertyValue) === false) {
+
+                $validate = true;
+            }
+
+            if ($required === true && $inputPropertyValue !== false && is_callable([$this, $validationMethod])) {
+
+                $validate = true;
+            }
+
+
+            if ($validate === true) {
+
+                if ($options === false) {
+
+                    $this->messages[$prop] = ['Validation without options', $inputPropertyValue];
+
+                    // Without options
+                    $input[$prop] = call_user_func_array(
+                        [$this, $validationMethod],
+                        [$inputPropertyValue]
+                    ) ? $inputPropertyValue: false;
+
                 } else {
 
-                    $input[$prop] = call_user_func_array([$this, $setup['validation_method']], [$inputProp, $setup['options']]) ? $inputProp: false;
+                    $this->messages[$prop] = ['Validation with options', $inputPropertyValue, $options];
+
+                    // With options
+                    $input[$prop] = call_user_func_array(
+                        [$this, $validationMethod],
+                        [$inputPropertyValue, $options]
+                    ) ? $inputPropertyValue: false;
                 }
+
+
+            } else {
+
+                $this->messages[$prop] = ['No validation', $inputPropertyValue];
+                $input[$prop] = $inputPropertyValue;
             }
         }
 
         return $input;
     }
+
+
+    public function getValidationMessages()
+    {
+        return $this->messages;
+    }
+
+
+    protected function isEmptyValue($value)
+    {
+        if (is_array($value) && count($value) === 0) {
+
+            return true;
+        }
+
+        if (is_scalar($value) && !is_bool($value) && mb_strlen((string)$value) === 0) {
+
+            return true;
+        }
+
+        return false;
+    }
+
 
 
     /**

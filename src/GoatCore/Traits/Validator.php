@@ -141,41 +141,6 @@ trait Validator
 
 
     /**
-    * Validate array value, optional sub validator for values
-    * Empty array is valid
-    * @param mixed $value
-    * @param array $subvalidator
-    * @return bool
-    */
-    public function arrayOf($value, $options = []): bool
-    {
-        if (!is_array($value)) {
-
-            return false;
-        }
-
-        $validation_method = ark($options, 'validation_method', false);
-
-        if ($validation_method !== false) {
-
-            foreach($value as $v) {
-
-                if (!is_array($options) && call_user_func_array([$this, $validation_method], [$v]) === false) {
-
-                    return false;
-
-                } elseif (call_user_func_array([$this, $validation_method], [$v, $options]) === false) {
-
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
-
-    /**
     * Validate string value, min and max length optional validation
     * @param mixed $value
     * @param array $options
@@ -206,8 +171,45 @@ trait Validator
 
 
     /**
+    * Validate array value, optional sub validator for values
+    * Empty array is valid
+    * @param mixed $value
+    * @param array $subvalidator
+    * @return bool
+    */
+    public function arrayOf($value, $options = []): bool
+    {
+        if (!is_array($value) || count($value) === 0) {
+
+            return false;
+        }
+
+        $validation_method = ark($options, 'validation_method', false);
+
+        if ($validation_method !== false) {
+
+            unset($options['validation_method']);
+
+            foreach($value as $v) {
+
+                if (count($options) === 0 && call_user_func_array([$this, $validation_method], [$v]) === false) {
+
+                    return false;
+
+                } elseif (call_user_func_array([$this, $validation_method], [$v, $options]) === false) {
+
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+
+    /**
     * Validate lang alpha2 code value
-    * As the options, the ISO-639 array is required
+    * As the options, an encoded ISO-639 array is required
     * JSON sample:
     * [{
     *     "name": "English",
@@ -222,7 +224,7 @@ trait Validator
     {
         $langs = ark($options, 'langs', []);
 
-        if (array_search($value, array_column($langs, 'alpha2')) !== false) {
+        if (array_search($value['alpha2'], array_column($langs, 'alpha2')) !== false) {
 
            return true;
         }

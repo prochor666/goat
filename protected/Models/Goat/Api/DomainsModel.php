@@ -13,43 +13,53 @@ use Goat\BasicAssetModel;
 */
 class DomainsModel extends BasicAssetModel
 {
+    protected $langService, $storageService, $resources;
+
     public function __construct(GoatCore $app, DbAssets $assets)
     {
         parent::__construct($app, $assets);
+
+        $this->langService = $this->app->store->entry('Goat\Lang');
+        $this->storageService = $this->app->store->entry('Goat\Storage');
+        $this->resources = [
+            'langFile' => $this->app->config('fsRoot') . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'ISO-639.json',
+        ];
 
         $this->predefined = [
             'name' => [
                 'validation_method'    => 'string',
                 'default'              => '',
-                'options'              => ['min' => 1, 'max' => 255],
+                'required'             => true,
+                'options'              => ['min' => 0, 'max' => 255],
             ],
             'host' => [
                 'validation_method'    => 'domain',
                 'default'              => '',
+                'required'             => true,
                 'options'              => false,
             ],
             'public' => [
                 'validation_method'    => 'int',
                 'default'              => 0,
+                'required'             => true,
                 'options'              => ['min' => 0, 'max' => 1],
             ],
             'langs' => [
                 'validation_method'    => 'arrayOf',
-                'default'              => [
-                    'en',
-                ],
+                'required'             => true,
                 'options'              => [
                     'validation_method' => 'lang',
-                ]
+                ],
             ],
             'lang_default' => [
                 'validation_method'    => 'string',
-                'default'              => 'en',
-                'options'              => ['min' => 1, 'max' => 255],
+                'required'             => true,
+                'options'              => ['min' => 1, 'max' => 3],
             ],
             'aliases' => [
                 'validation_method'    => 'arrayOf',
                 'default'              => [],
+                'required'             => false,
                 'options'              => [
                     'validation_method' => 'domain',
                 ]
@@ -65,6 +75,9 @@ class DomainsModel extends BasicAssetModel
     */
     public function create($input): array
     {
+        $this->predefined['langs']['options']['langs'] = $this->langService->loadAll(
+            json_decode($this->storageService->readFile($this->resources['langFile']), true));
+
         $input = $this->normalize($input, $setDefaults = true);
 
         // Check data completition
@@ -143,6 +156,11 @@ class DomainsModel extends BasicAssetModel
     */
     public function update($id, $input): array
     {
+        $this->predefined['langs']['options']['langs'] = $this->langService->loadAll(
+            json_decode($this->storageService->readFile($this->resources['langFile']), true));
+
+        $al = ark($input, 'langs', 'XXX');
+
         $input = $this->normalize($input, $setDefaults = true);
 
         // Check data completition
@@ -153,6 +171,7 @@ class DomainsModel extends BasicAssetModel
             return [
                 'error' => "Invalid dataset",
                 'input' => $input,
+                'test' => $this->getValidationMessages(),
             ];
         }
 
@@ -350,7 +369,7 @@ class DomainsModel extends BasicAssetModel
             // Iterate over the existing aliases
             foreach ($relatedLangs as $key => $obj) {
 
-                $sid = array_search($obj->host, $langs);
+                $sid = array_search($obj->alpha2, $langs);
 
                 if ($sid !== false) {
 
@@ -366,12 +385,14 @@ class DomainsModel extends BasicAssetModel
             $this->assets->save($domain);
         }
 
-        // Iterate over the pushed aliases
+        /* // Iterate over the pushed aliases
         foreach($langs as $value) {
 
             // Create if not exist
             $newLangList[] = $this->extend(['alpha2' => $value], 'create');
-        }
+        } */
+
+        $newLangList = $langs;
 
         $this->assets->oneToMany($domain, 'langs', $newLangList);
 
