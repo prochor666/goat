@@ -62,4 +62,13 @@ class HelpersModel
 
         return $data;
     }
+
+
+    public function roles($input = [])
+    {
+        $result = [
+            'data' => $this->app->config('roles'),
+            'status' => true,
+        ];
+    }
 }
