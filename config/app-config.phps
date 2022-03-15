@@ -148,6 +148,10 @@ $config = [
             'class'     => 'Goat\Api\Directory',
             'method'    => 'setup',
         ],
+        'meta' => [
+            'class'     => 'Goat\Api\Meta',
+            'method'    => 'setup',
+        ],
         'helpers' => [
             'class' => 'Goat\Api\Helpers',
             'method' => 'setup',
