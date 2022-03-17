@@ -98,6 +98,30 @@ class Auth implements IApiController
     }
 
 
+    public function recover(): object
+    {
+        $this->model = new AuthModel($this->app, new DbAssets('users'));
+
+        switch (strtolower($this->method)) {
+
+            case 'patch':
+                // Create rceovery
+                $input = !empty($_POST) ? $_POST: json_decode(file_get_contents('php://input'), true);
+                $this->data = $this->model->activate($input);
+                break;
+
+            default:
+
+                $input = !empty($_GET) ? $_GET: [];
+                $this->data = $this->model->logged();
+        }
+
+        //$this->setUserSession();
+
+        return $this;
+    }
+
+
     protected function setUserSession()
     {
         $logged = ark($this->data, 'logged', false);

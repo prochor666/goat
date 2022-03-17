@@ -45,7 +45,7 @@ class AuthModel extends BasicAssetModel
         $username   = is_object($user) ? $user->username: '';
         $email      = is_object($user) ? $user->email: '';
 
-        $exists = $this->existsWithData(' (id = ? AND username LIKE ? AND email LIKE ?)', [$id, $username, $email]);
+        $exists = $this->existsWithData(' (id = ? AND username LIKE ? AND email LIKE ? AND active = 1)', [$id, $username, $email]);
 
         // Valid user, update session record
         if ($exists->id > 0) {
@@ -97,7 +97,7 @@ class AuthModel extends BasicAssetModel
             ];
         }
 
-        $exists = $this->existsWithData(' (username LIKE ? OR email LIKE ?) AND password LIKE ?', [$input['login'], $input['login'], getHash($input['password'])]);
+        $exists = $this->existsWithData(' (username LIKE ? OR email LIKE ?) AND password LIKE ? AND acive = 1', [$input['login'], $input['login'], getHash($input['password'])]);
 
         if ($exists->id > 0) {
 
