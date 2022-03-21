@@ -124,6 +124,10 @@ $config = [
             'class'     => 'Goat\Api\Auth',
             'method'    => 'setup',
         ],
+        'recover' => [
+            'class'     => 'Goat\Api\Auth',
+            'method'    => 'recover',
+        ],
         'domains' => [
             'class'     => 'Goat\Api\Domains',
             'method'    => 'setup',
