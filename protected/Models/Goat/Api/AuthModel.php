@@ -97,7 +97,7 @@ class AuthModel extends BasicAssetModel
             ];
         }
 
-        $exists = $this->existsWithData(' (username LIKE ? OR email LIKE ?) AND password LIKE ? AND acive = 1', [$input['login'], $input['login'], getHash($input['password'])]);
+        $exists = $this->existsWithData(' (username LIKE ? OR email LIKE ?) AND password LIKE ? AND active = 1', [$input['login'], $input['login'], getHash($input['password'])]);
 
         if ($exists->id > 0) {
 
