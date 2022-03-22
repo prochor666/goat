@@ -179,10 +179,12 @@ class AuthModel extends BasicAssetModel
     {
         $exists = $this->existsWithData('username LIKE ? OR email LIKE ?', [$input['user'], $input['user']]);
 
+        $token = rnd(200);
+
         if ($exists->id > 0) {
 
             $this->assets->update($exists->id, [
-                'token'   => rnd(200),
+                'token'   => $token,
             ]);
 
             $this->history([
@@ -197,6 +199,8 @@ class AuthModel extends BasicAssetModel
 
         return [
             'recover' => $exists->id > 0 ? true: false,
+            'user' => $exists,
+            'token' => $token,
         ];
     }
 

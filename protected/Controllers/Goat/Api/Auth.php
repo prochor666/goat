@@ -58,7 +58,7 @@ class Auth implements IApiController
                             'mailTo'    => $user->email,
                             'mailFrom'  => $this->app->config('email')['smtp']['systemMail'],
                             'subject'   => 'New login',
-                            'body'      => "User {$user->username} login checkj, IP: " . clientIp(),
+                            'body'      => "User {$user->username} login check, IP: " . clientIp(),
                         ],
                     ]);
 
@@ -108,6 +108,31 @@ class Auth implements IApiController
                 // Create rceovery
                 $input = !empty($_POST) ? $_POST: json_decode(file_get_contents('php://input'), true);
                 $this->data = $this->model->recover($input);
+
+                if (isset($this->data['recover']) && $this->data['recover'] === true) {
+
+                    $user = $this->data['user'];
+
+                    $q = $this->app->store->entry('GoatCore\Events\Queue');
+
+                    $ev = $q->add([
+                        'class'     => 'Goat\Mailer',
+                        'method'    => 'send',
+                        'data'      => [
+                            'nameTo'    => "{$user->firstname} {$user->lastname}",
+                            'mailTo'    => $user->email,
+                            'mailFrom'  => $this->app->config('email')['smtp']['systemMail'],
+                            'subject'   => 'Password recovery',
+                            'body'      => "User {$user->username} recovery token: " . $this->data['token'],
+                        ],
+                    ]);
+
+                    $this->data['registered_events'] = $q->list();
+                    $this->data['event_containers'] = $q->listContainers();
+
+                    unset($this->data['user'], $this->data['token']);
+                }
+
                 break;
 
             case 'patch':
