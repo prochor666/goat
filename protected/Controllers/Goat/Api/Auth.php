@@ -70,13 +70,13 @@ class Auth implements IApiController
 
             case 'put':
                 // Logout all sessions
-                $input = !empty($_POST) ? $_POST: json_decode(file_get_contents('php://input'), true);
+                $input = json_decode(file_get_contents('php://input'), true);
                 $this->data = $this->model->logoutGlobal();
                 break;
 
             case 'patch':
                 // Activate user
-                $input = !empty($_POST) ? $_POST: json_decode(file_get_contents('php://input'), true);
+                $input = json_decode(file_get_contents('php://input'), true);
                 $this->data = $this->model->activate($input);
                 break;
 
@@ -104,14 +104,20 @@ class Auth implements IApiController
 
         switch (strtolower($this->method)) {
 
-            case 'patch':
+            case 'post':
                 // Create rceovery
                 $input = !empty($_POST) ? $_POST: json_decode(file_get_contents('php://input'), true);
-                $this->data = $this->model->activate($input);
+                $this->data = $this->model->recover($input);
+                break;
+
+            case 'patch':
+                // Set new password
+                $input = json_decode(file_get_contents('php://input'), true);
+                $this->data = $this->model->updatePassword($input);
                 break;
 
             default:
-
+                // Get recovery token
                 $input = !empty($_GET) ? $_GET: [];
                 $this->data = $this->model->logged();
         }

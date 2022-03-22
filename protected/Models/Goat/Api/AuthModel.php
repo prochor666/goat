@@ -135,7 +135,7 @@ class AuthModel extends BasicAssetModel
     */
     public function activate($input): array
     {
-        $exists = $this->existsWithData(' (username LIKE ? OR email LIKE ?) AND token LIKE ?', [$input['login'], $input['login'], $input['token']]);
+        $exists = $this->existsWithData('token LIKE ?', [$input['token']]);
 
         if ($exists->id > 0) {
 
@@ -168,6 +168,38 @@ class AuthModel extends BasicAssetModel
             'user' => $exists
         ];
     }
+
+
+    /**
+    * User password recovery token check
+    * @param array $input
+    * @return array
+    */
+    public function recover($input): array
+    {
+        $exists = $this->existsWithData('username LIKE ? OR email LIKE ?', [$input['user'], $input['user']]);
+
+        if ($exists->id > 0) {
+
+            $this->assets->update($exists->id, [
+                'token'   => rnd(200),
+            ]);
+
+            $this->history([
+                'targetid'  => $exists->id,
+                'type'      => 'user',
+                'message'   => 'User pasword recovery',
+                'data'      => $input,
+                'username'  => $exists->username,
+                'userid'    => $exists->id,
+            ]);
+        }
+
+        return [
+            'recover' => $exists->id > 0 ? true: false,
+        ];
+    }
+
 
 
     /**
