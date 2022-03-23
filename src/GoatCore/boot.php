@@ -9,7 +9,6 @@ mb_internal_encoding('UTF-8');
 mb_language('uni');
 mb_regex_encoding('UTF-8');
 
-
 /* ****************************************
 *  Load Black magic                       *
 * *************************************** */
@@ -17,19 +16,19 @@ use GoatCore\Base\Config;
 use GoatCore\Base\Autoloader;
 use GoatCore\Errors\ErrorHandler;
 
-require_once GOAT_ROOT . '/src/GoatCore/Base/Autoloader.php';
-require_once GOAT_ROOT . '/src/GoatCore/utils.php';
-require_once GOAT_ROOT . '/src/GoatCore/format.php';
-require_once GOAT_ROOT . '/vendor/autoload.php';
+require_once GOAT_ROOT . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'GoatCore' . DIRECTORY_SEPARATOR . 'Base' . DIRECTORY_SEPARATOR . 'Autoloader.php';
+require_once GOAT_ROOT . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'GoatCore' . DIRECTORY_SEPARATOR . 'utils.php';
+require_once GOAT_ROOT . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'GoatCore' . DIRECTORY_SEPARATOR . 'format.php';
+require_once GOAT_ROOT . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 try {
     // Lets make some autoloading
     Autoloader::init()->register([
-        GOAT_ROOT . '/src',
-        GOAT_ROOT . '/src/Traits',
+        GOAT_ROOT . DIRECTORY_SEPARATOR . 'src',
+        GOAT_ROOT . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Traits',
     ]);
 
-    if (file_exists(GOAT_ROOT . '/.dots/.reporterrors')) {
+    if (file_exists(GOAT_ROOT . DIRECTORY_SEPARATOR . '.dots' . DIRECTORY_SEPARATOR . '.reporterrors')) {
 
         ini_set('display_errors', 1);
         error_reporting(E_ALL);

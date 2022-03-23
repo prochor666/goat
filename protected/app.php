@@ -1,23 +1,18 @@
 <?php
 use GoatCore\Base\Autoloader;
 use GoatCore\Base\Store;
-use GoatCore\Events\Queue;
-use GoatCore\Http\Route;
-use GoatCore\Http\Url;
-use GoatCore\Db\Db;
 use GoatCore\GoatCore;
 
 Autoloader::init()->register([
-    GOAT_ROOT . '/protected/Controllers',
-    GOAT_ROOT . '/protected/Models',
-    GOAT_ROOT . '/protected/Views',
-    GOAT_ROOT . '/protected/Interfaces',
-    GOAT_ROOT . '/protected/Traits',
-    GOAT_ROOT . '/protected/Services',
+    GOAT_ROOT . DIRECTORY_SEPARATOR . 'protected' . DIRECTORY_SEPARATOR . 'Controllers',
+    GOAT_ROOT . DIRECTORY_SEPARATOR . 'protected' . DIRECTORY_SEPARATOR . 'Models',
+    GOAT_ROOT . DIRECTORY_SEPARATOR . 'protected' . DIRECTORY_SEPARATOR . 'Views',
+    GOAT_ROOT . DIRECTORY_SEPARATOR . 'protected' . DIRECTORY_SEPARATOR . 'Interfaces',
+    GOAT_ROOT . DIRECTORY_SEPARATOR . 'protected' . DIRECTORY_SEPARATOR . 'Traits',
+    GOAT_ROOT . DIRECTORY_SEPARATOR . 'protected' . DIRECTORY_SEPARATOR . 'Services',
 ]);
 
 use Goat\Hub;
-use PHPMailer\PHPMailer\PHPMailer;
 
 date_default_timezone_set('UTC');
 
@@ -38,7 +33,6 @@ foreach($appConfigFiles as $cf) {
 
     if (file_exists($appConfigRoot.DIRECTORY_SEPARATOR.$cf)) {
 
-        //echo dump($appConfigRoot.DIRECTORY_SEPARATOR.$cf);
         require_once($appConfigRoot.DIRECTORY_SEPARATOR.$cf);
     }
 }
@@ -54,35 +48,9 @@ session_set_cookie_params([
     'samesite' => $goatCore->config('session')['cookie_samesite'],
 ]);
 
-$goatCore->store->entry(new Queue);
-$goatCore->store->entry(new Goat\Mailer(
-    $goatCore->config('email'), new PHPMailer(true))
-);
-$goatCore->store->entry(new Url);
-$goatCore->store->entry(new Route(
-    $goatCore->store->entry(Url::class))
-);
-$goatCore->store->entry(
-    new Db($goatCore->config('database'))
-);
-$goatCore->store->entry(
-    new Goat\Storage($goatCore->config('fsRoot'))
-);
-$goatCore->store->entry(
-    new Goat\Image($goatCore->config('image')['useImageMagick'])
-);
-$goatCore->store->entry(
-    new Goat\Thumbnail(
-        $goatCore->config('image'),
-        $goatCore->store->entry('Goat\Image'),
-        $goatCore->store->entry('Goat\Storage'))
-);
-$goatCore->store->entry(
-    new Goat\Session()
-);
-$goatCore->store->entry(
-    new Goat\Lang()
-);
+// Load web services
+require_once(__DIR__.DIRECTORY_SEPARATOR.'loader.php');
+webLoader($goatCore);
 
 /* ***************
 | Site run
