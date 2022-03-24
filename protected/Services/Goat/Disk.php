@@ -3,13 +3,12 @@ namespace Goat;
 
 class Disk
 {
-    protected $config, $storageService;
+    protected $config;
 
     use \GoatCore\Traits\Disk;
 
-    public function __construct($config, $storageService)
+    public function __construct($config)
     {
         $this->config = $config;
-        $this->storageService = $storageService;
     }
 }
