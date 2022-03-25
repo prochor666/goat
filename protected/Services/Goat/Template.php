@@ -16,8 +16,8 @@ class Template
 
     public function load($domains_id, $template, $data): array
     {
-        $this->templateDir = $this->storageService->domainStorageDir($config['domains_id']) . DIRECTORY_SEPARATOR . 'templates';
-        $this->templateCacheDir = $this->storageService->domainStorageDir($config['domains_id']) . DIRECTORY_SEPARATOR . 'templates'. DIRECTORY_SEPARATOR . 'cache';
+        $this->templateDir = $this->storageService->for($config['domains_id'], 'templates') . DIRECTORY_SEPARATOR . 'templates';
+        $this->templateCacheDir = $this->storageService->for($config['domains_id'], 'cache') . DIRECTORY_SEPARATOR . 'templates'. DIRECTORY_SEPARATOR . 'cache';
 
         $loader = new \Twig\Loader\FilesystemLoader($this->templateDir);
         $this->twig = new \Twig\Environment($loader, [

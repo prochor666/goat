@@ -329,9 +329,9 @@ class FileUploadModel extends BasicAssetModel
             && $chunkSize > 0
         ) {
 
-            $uploadDir = $this->storageService->domainPublicDir($domains_id) . DIRECTORY_SEPARATOR . 'content' . DIRECTORY_SEPARATOR . $path;
-            $tempDir = $this->storageService->domainTempDir($domains_id) . DIRECTORY_SEPARATOR . 'uploads';
-            $cacheDir = $this->storageService->domainCacheDir($domains_id) . DIRECTORY_SEPARATOR . $path;
+            $uploadDir = $this->storageService->for($domains_id, 'public') . DIRECTORY_SEPARATOR . 'content' . DIRECTORY_SEPARATOR . $path;
+            $tempDir = $this->storageService->for($domains_id, 'temp') . DIRECTORY_SEPARATOR . 'uploads';
+            $cacheDir = $this->storageService->for($domains_id, 'cache') . DIRECTORY_SEPARATOR . $path;
 
             $uploadFile = $uploadDir. DIRECTORY_SEPARATOR . $basename;
             $tempFile = $tempDir. DIRECTORY_SEPARATOR . $basename . '.' . $token . '.temporary';
@@ -431,9 +431,9 @@ class FileUploadModel extends BasicAssetModel
             ];
         }
 
-        $fullPath = $this->storageService->domainContentDir($exists->domains_id) . DIRECTORY_SEPARATOR . $exists->path . DIRECTORY_SEPARATOR . $exists->basename;
+        $fullPath = $this->storageService->for($exists->domains_id, 'content') . DIRECTORY_SEPARATOR . $exists->path . DIRECTORY_SEPARATOR . $exists->basename;
 
-        $cacheDir = $this->storageService->domainCacheDir($exists->domains_id) . DIRECTORY_SEPARATOR . $exists->path;
+        $cacheDir = $this->storageService->for($exists->domains_id, 'cache') . DIRECTORY_SEPARATOR . $exists->path;
 
 
         $this->fileClearCache($fullPath, $cacheDir);

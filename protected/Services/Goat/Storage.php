@@ -3,7 +3,7 @@ namespace Goat;
 
 class Storage
 {
-    protected $root;
+    protected $root, $endpoints;
 
     use \GoatCore\Traits\Validator;
     use \GoatCore\Traits\Disk;
@@ -11,6 +11,22 @@ class Storage
     public function __construct($root)
     {
         $this->root = $root;
+    }
+
+
+    public function for($domains_id, $endpoint): string
+    {
+        // Domain storage endpoints
+        $endpoints = [
+            'temp' => ['temp', 'sites', $domains_id],
+            'public' => ['public', 'sites', $domains_id],
+            'content' => ['public', 'sites', $domains_id, 'content'],
+            'cache' => ['public', 'sites', $domains_id, 'cache'],
+            'storage' => ['storage', 'sites', $domains_id],
+            'templates' => ['storage', 'sites', $domains_id, 'templates'],
+        ];
+
+        return $this->root . $this->enumeratePath(ark($endpoints, $endpoint, $endpoints['temp']));
     }
 
 
@@ -24,7 +40,7 @@ class Storage
 
         if ($type === 'content') {
 
-            $dir = $this->domainPublicDir($domains_id) . DIRECTORY_SEPARATOR . 'content' . $this->enumeratePath($relativePath);
+            $dir = $this->for($domains_id, 'public') . DIRECTORY_SEPARATOR . 'content' . $this->enumeratePath($relativePath);
 
             if ($this->isDir($dir)) {
 
@@ -41,7 +57,7 @@ class Storage
 
         if ($type === 'cache') {
 
-            $dir = $this->domainPublicDir($domains_id) . DIRECTORY_SEPARATOR . 'cache' . $this->enumeratePath($relativePath);
+            $dir = $this->for($domains_id, 'public') . DIRECTORY_SEPARATOR . 'cache' . $this->enumeratePath($relativePath);
 
             if ($this->isDir($dir)) {
 
@@ -58,7 +74,7 @@ class Storage
 
         if ($type === 'public') {
 
-            $dir = $this->domainPublicDir($domains_id) . $this->enumeratePath($relativePath);
+            $dir = $this->for($domains_id, 'public') . $this->enumeratePath($relativePath);
 
             if ($this->isDir($dir)) {
 
@@ -75,7 +91,7 @@ class Storage
 
         if ($type === 'storage') {
 
-            $dir = $this->domainStorageDir($domains_id) . $this->enumeratePath($relativePath);
+            $dir = $this->for($domains_id, 'storage') . $this->enumeratePath($relativePath);
 
             if ($this->isDir($dir)) {
 
@@ -91,7 +107,7 @@ class Storage
 
         if ($type === 'temp') {
 
-            $dir = $this->domainTempDir($domains_id) . $this->enumeratePath($relativePath);
+            $dir = $this->for($domains_id, 'temp') . $this->enumeratePath($relativePath);
 
             if ($this->isDir($dir)) {
 
@@ -106,58 +122,6 @@ class Storage
         }
 
         return $data;
-    }
-
-
-    public function domainTempDir($domains_id): string
-    {
-        return $this->root . $this->enumeratePath([
-            'temp',
-            'sites',
-            $domains_id
-        ]);
-    }
-
-
-    public function domainPublicDir($domains_id): string
-    {
-        return $this->root . $this->enumeratePath([
-            'public',
-            'sites',
-            $domains_id
-        ]);
-    }
-
-
-    public function domainContentDir($domains_id): string
-    {
-        return $this->root . $this->enumeratePath([
-            'public',
-            'sites',
-            $domains_id,
-            'content'
-        ]);
-    }
-
-
-    public function domainCacheDir($domains_id): string
-    {
-        return $this->root . $this->enumeratePath([
-            'public',
-            'sites',
-            $domains_id,
-            'cache'
-        ]);
-    }
-
-
-    public function domainStorageDir($domains_id): string
-    {
-        return $this->root . $this->enumeratePath([
-            'storage',
-            'sites',
-            $domains_id
-        ]);
     }
 
 
