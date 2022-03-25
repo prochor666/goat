@@ -11,19 +11,18 @@ class Template
     {
         $this->config = $config;
         $this->storageService = $storageService;
+    }
 
-        $this->templateDir = $this->storageService->storageDir($config['domains_id']) . DIRECTORY_SEPARATOR . 'templates';
-        $this->templateCacheDir = $this->storageService->storageDir($config['domains_id']) . DIRECTORY_SEPARATOR . 'templates'. DIRECTORY_SEPARATOR . 'cache';
+
+    public function load($domains_id, $template, $data): array
+    {
+        $this->templateDir = $this->storageService->domainStorageDir($config['domains_id']) . DIRECTORY_SEPARATOR . 'templates';
+        $this->templateCacheDir = $this->storageService->domainStorageDir($config['domains_id']) . DIRECTORY_SEPARATOR . 'templates'. DIRECTORY_SEPARATOR . 'cache';
 
         $loader = new \Twig\Loader\FilesystemLoader($this->templateDir);
         $this->twig = new \Twig\Environment($loader, [
             'cache' => $this->templateCacheDir,
         ]);
-    }
-
-
-    public function load($template, $data): array
-    {
 
         return [];
     }

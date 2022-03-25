@@ -205,6 +205,40 @@ class AuthModel extends BasicAssetModel
     }
 
 
+    /**
+    * User password update
+    * @param array $input
+    * @return array
+    */
+    public function updatePassword($input): array
+    {
+        $exists = $this->existsWithData('username LIKE ? OR email LIKE ?', [$input['user'], $input['user']]);
+
+        $token = rnd(200);
+
+        if ($exists->id > 0) {
+
+            $this->assets->update($exists->id, [
+                'token'   => $token,
+            ]);
+
+            $this->history([
+                'targetid'  => $exists->id,
+                'type'      => 'user',
+                'message'   => 'User pasword recovery',
+                'data'      => $input,
+                'username'  => $exists->username,
+                'userid'    => $exists->id,
+            ]);
+        }
+
+        return [
+            'recover' => $exists->id > 0 ? true: false,
+            'user' => $exists,
+            'token' => $token,
+        ];
+    }
+
 
     /**
     * Set user session in database

@@ -30,6 +30,12 @@ function webLoader($goatCore): void
     $goatCore->store->entry(
         new \Goat\Lang()
     );
+    $goatCore->store->entry(
+        new \Goat\Disk($goatCore->config('fsRoot'))
+    );
+    $goatCore->store->entry(
+        new \Goat\Template($goatCore->config('fsRoot'), $goatCore->store->entry('Goat\Storage'))
+    );
 }
 
 
