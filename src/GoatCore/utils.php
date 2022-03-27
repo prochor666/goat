@@ -300,6 +300,7 @@ function redirect($url = null)
 /**
 * Sned custom HTTP status code
 * @param string $headerStatus
+* @return void
 */
 function headerStatus($headerStatus, $replace = false, $code = 0)
 {

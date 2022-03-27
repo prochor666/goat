@@ -611,23 +611,26 @@ trait Disk {
 
 
     /**
-    * Returns native OS UNC path
+    * Convert path with slashes to path with native directory separator
+    * Removes doubled separators
+    * s2n = slash to native
     * @param string $path
     * @return string
     */
-    public function s2unc($path): string
+    public function s2n($path): string
     {
-        return implode(DIRECTORY_SEPARATOR, explode('/' ,$path));
+        return implode(DIRECTORY_SEPARATOR, array_filter(explode('/' ,$path)));
     }
 
 
     /**
-    * Returns UNC path with slash delimiter
+    * Returns path with slash delimiter
+    * Removes doubled separators
     * @param string $path
     * @return string
     */
-    public function unc2s($path)
+    public function n2s($path)
     {
-        return implode('/', explode(DIRECTORY_SEPARATOR, $path));
+        return implode('/', array_filter(explode(DIRECTORY_SEPARATOR, $path)));
     }
 }

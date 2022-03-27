@@ -308,7 +308,7 @@ class FileUploadModel extends BasicAssetModel
         $finalChunk = ark($input, 'finalChunk', 1) ;
         $basename = ark($input, 'basename', '');
         $origin = ark($input, 'origin', '');
-        $path = $this->s2unc(ark($input, 'path', '')); // Domain relative path
+        $path = $this->s2n(ark($input, 'path', '')); // Domain relative path
         $token = ark($input, 'token', '');
         $domains_id = ark($input, 'domains_id', '');
         $fsRoot = $this->app->config('fsRoot');

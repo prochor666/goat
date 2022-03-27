@@ -5,7 +5,6 @@ class Storage
 {
     protected $root, $endpoints;
 
-    use \GoatCore\Traits\Validator;
     use \GoatCore\Traits\Disk;
 
     public function __construct($root)
@@ -26,7 +25,7 @@ class Storage
             'templates' => ['storage', 'sites', $domains_id, 'templates'],
         ];
 
-        return $this->root . $this->enumeratePath(ark($endpoints, $endpoint, $endpoints['temp']));
+        return $this->root . DIRECTORY_SEPARATOR . $this->enumeratePath(ark($endpoints, $endpoint, $endpoints['temp']));
     }
 
 
@@ -40,7 +39,7 @@ class Storage
 
         if ($type === 'content') {
 
-            $dir = $this->for($domains_id, 'public') . DIRECTORY_SEPARATOR . 'content' . $this->enumeratePath($relativePath);
+            $dir = $this->for($domains_id, 'public') . DIRECTORY_SEPARATOR . 'content' . DIRECTORY_SEPARATOR . $this->enumeratePath($relativePath);
 
             if ($this->isDir($dir)) {
 
@@ -74,7 +73,7 @@ class Storage
 
         if ($type === 'public') {
 
-            $dir = $this->for($domains_id, 'public') . $this->enumeratePath($relativePath);
+            $dir = $this->for($domains_id, 'public') . DIRECTORY_SEPARATOR . $this->enumeratePath($relativePath);
 
             if ($this->isDir($dir)) {
 
@@ -91,7 +90,7 @@ class Storage
 
         if ($type === 'storage') {
 
-            $dir = $this->for($domains_id, 'storage') . $this->enumeratePath($relativePath);
+            $dir = $this->for($domains_id, 'storage') . DIRECTORY_SEPARATOR . $this->enumeratePath($relativePath);
 
             if ($this->isDir($dir)) {
 
@@ -107,7 +106,7 @@ class Storage
 
         if ($type === 'temp') {
 
-            $dir = $this->for($domains_id, 'temp') . $this->enumeratePath($relativePath);
+            $dir = $this->for($domains_id, 'temp') . DIRECTORY_SEPARATOR . $this->enumeratePath($relativePath);
 
             if ($this->isDir($dir)) {
 
@@ -128,19 +127,17 @@ class Storage
     public function httpPath($path): string
     {
         $l = mb_strlen($this->root);
-        return $this->unc2s(mb_substr($path, $l));
+        return $this->n2s(mb_substr($path, $l));
     }
 
 
-    public function enumeratePath($pathArray): string
+    public function enumeratePath($path): string
     {
-        if ($this->string($pathArray) === true) {
+        if (is_array($path)) {
 
-            $pathArray = explode('/', $pathArray);
+            $path = implode('/', $path);
         }
 
-        $pathArray = array_filter($pathArray);
-
-        return count($pathArray)>0 ? DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $pathArray): '';
+        return $this->s2n($path);
     }
 }
