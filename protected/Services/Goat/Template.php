@@ -1,29 +1,27 @@
 <?php
 namespace Goat;
 
+use Goat\Storage;
+
 class Template
 {
-    protected $config, $templateDir, $storageService, $twig;
+    protected $storageService;
 
-    use \GoatCore\Traits\Disk;
-
-    public function __construct($config, $storageService)
+    public function __construct(Storage $storageService)
     {
-        $this->config = $config;
         $this->storageService = $storageService;
     }
 
 
-    public function load($domains_id, $template, $data): array
+    public function load($domains_id, $template, $data): string
     {
-        $this->templateDir = $this->storageService->for($config['domains_id'], 'templates') . DIRECTORY_SEPARATOR . 'templates';
-        $this->templateCacheDir = $this->storageService->for($config['domains_id'], 'cache') . DIRECTORY_SEPARATOR . 'templates'. DIRECTORY_SEPARATOR . 'cache';
-
-        $loader = new \Twig\Loader\FilesystemLoader($this->templateDir);
-        $this->twig = new \Twig\Environment($loader, [
-            'cache' => $this->templateCacheDir,
+        $loader = new \Twig\Loader\FilesystemLoader(dirname($template));
+        $twig = new \Twig\Environment($loader, [
+            'cache' => $this->storageService->for($domains_id, 'cache'),
         ]);
 
-        return [];
+        $template = $twig->load($template);
+
+        return $template->render($data);
     }
 }
