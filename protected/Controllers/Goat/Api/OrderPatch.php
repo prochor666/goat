@@ -42,22 +42,17 @@ class OrderPatch implements IApiController
         switch (strtolower($this->method)) {
 
             case 'patch': case 'put';
-                // Update partial
-                $input = json_decode(file_get_contents('php://input'), true);
+
+            $input = json_decode(file_get_contents('php://input'), true);
                 $this->data = $this->model->patch($input);
                 break;
 
             default:
-                $id = (int)$route->index($route->count() - 1);
-
-                if ($id > 0) {
-
-                    $this->data = $this->model->one($id);
-                } else {
-
                     $input = !empty($_GET) ? $_GET: [];
-                    $this->data = $this->model->find($input);
-                }
+                    $this->data = [
+                        'error' => 'Data error',
+                        'input[GET]' => $input,
+                    ];
         }
 
         return $this;
