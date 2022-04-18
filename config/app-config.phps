@@ -160,6 +160,10 @@ $config = [
             'class' => 'Goat\Api\Helpers',
             'method' => 'setup',
         ],
+        'order_patch' => [
+            'class' => 'Goat\Api\OrderPatch',
+            'method' => 'setup',
+        ],
     ],
 
     // Cli commands

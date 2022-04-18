@@ -141,6 +141,17 @@ trait Validator
 
 
     /**
+    * Validate array value
+    * @param mixed $value
+    * @return bool
+    */
+    public function array($value): bool
+    {
+        return is_array($value);
+    }
+
+
+    /**
     * Validate string value, min and max length optional validation
     * @param mixed $value
     * @param array $options

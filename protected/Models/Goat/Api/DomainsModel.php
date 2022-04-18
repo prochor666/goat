@@ -62,7 +62,7 @@ class DomainsModel extends BasicAssetModel
                 'required'             => false,
                 'options'              => [
                     'validation_method' => 'domain',
-                ]
+                ],
             ]
         ];
     }
