@@ -21,21 +21,25 @@ class MetaModel extends BasicAssetModel
             'tag' => [
                 'validation_method'    => 'string',
                 'default'              => '',
+                'required'             => true,
                 'options'              => ['min' => 1, 'max' => 255],
             ],
             'name' => [
                 'validation_method'    => 'string',
                 'default'              => '',
+                'required'             => true,
                 'options'              => ['min' => 1, 'max' => 255],
             ],
             'type' => [
                 'validation_method'    => 'string',
                 'default'              => 0,
-                'options'              => ['min' => 0, 'max' => 17],
+                'required'             => true,
+                'options'              => false,
             ],
             'settings' => [
-                'validation_method'    => 'string',
-                'default'              => '',
+                'validation_method'    => 'array',
+                'default'              => [],
+                'required'             => true,
                 'options'              => false,
             ],
             'order' => [
