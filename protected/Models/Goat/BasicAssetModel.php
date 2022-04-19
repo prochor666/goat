@@ -176,13 +176,23 @@ class BasicAssetModel
     }
 
 
-    public function getValidationMessages()
+    /**
+    * VAlidation messages getter
+    * @param void
+    * @return array
+    */
+    public function getValidationMessages(): array
     {
         return $this->messages;
     }
 
 
-    protected function isEmptyValue($value)
+    /**
+    * Check if value is empty or zero length
+    * @param mixed $value
+    * @return bool
+    */
+    protected function isEmptyValue($value): bool
     {
         if (is_array($value) && count($value) === 0) {
 
@@ -226,6 +236,154 @@ class BasicAssetModel
         }
 
         return [];
+    }
+
+
+    /**
+    * Convert data object
+    * @param object|array $data
+    * @param bool $forceAssoc
+    * @return iterable
+    */
+    public function dbSafeConvert($data, $forceAssoc = true): iterable
+    {
+        foreach ($data as $key => $value) {
+
+            if (is_object($data)) {
+
+                $data->$key = $this->isJSONIterable($value) ? $this->JSONExtract($value, $forceAssoc): $value;
+            } else {
+
+                $data[$key] = $this->isJSONIterable($value) ? $this->JSONExtract($value, $forceAssoc): $value;
+            }
+        }
+
+        return $data;
+    }
+
+
+    /**
+    * Extract JSON value as array or object
+    * @param string $data
+    * @param bool $forceAssoc
+    * @return iterable
+    */
+    public function JSONExtract($value, $forceAssoc = true): iterable
+    {
+        return json_decode($value, $forceAssoc);
+    }
+
+
+    /**
+    * Detect if JSON value is object or array
+    * @param string $value
+    * @param bool $forceAssoc
+    * @return bool
+    */
+    public function isJSONIterable($value): bool
+    {
+        if (!is_string($value)) {
+
+            return false;
+        }
+
+        if (strlen($value) < 2) {
+
+            return false;
+        }
+
+        // Any needle JSON string has to be wrapped in {} or [].
+        if ('{' != $value[0] && '[' != $value[0]) {
+
+            return false;
+        }
+
+        // Verify that the trailing character matches the first character.
+        $lastChar = $value[strlen($value) -1];
+
+        if ('{' == $value[0] && '}' != $lastChar) {
+
+            return false;
+        }
+
+        if ('[' == $value[0] && ']' != $lastChar) {
+
+            return false;
+        }
+
+        return true;
+    }
+
+
+    /**
+    * Convert array indexes (which are array or object) to JSON strings
+    * @param array $input
+    * @return array
+    */
+    public function dbSafe($input): array
+    {
+        foreach ($input as $key => $value) {
+
+            $needle = $this->needConversion($value);
+
+            switch ($needle) {
+
+                case 'to_json':
+                    $input[$key] = $this->toDbJSON($value);
+                    break;
+
+                case 'to_empty_string':
+                    $input[$key] = '';
+                    break;
+
+                case 'bool_to_int':
+                    $input[$key] = $value ? 1: 0;
+                    break;
+
+                default:
+                    $input[$key] = $value;
+            }
+        }
+
+        return $input;
+    }
+
+
+
+    /**
+    * Check if value needs conversion to JSON string or needs to be fixed (resource|bool)
+    * @param mixed $value
+    * @return string
+    */
+    public function needConversion($value): string
+    {
+        if (is_array($value) || is_object($value)) {
+
+            return 'to_json';
+        }
+
+        if (is_null($value) || is_resource($value)) {
+
+            return 'to_empty_string';
+        }
+
+        if (is_bool($value)) {
+
+            return 'bool_to_int';
+        }
+
+        return '';
+    }
+
+
+    /**
+    * Convert array or object to JSON string
+    * @param array $input
+    * @return string
+    */
+    public function toDbJSON($value): string
+    {
+        return json_encode($value);
     }
 
 

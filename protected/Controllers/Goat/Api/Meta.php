@@ -73,7 +73,7 @@ class Meta implements IApiController
 
                 if ($id > 0) {
 
-                    $this->data = $this->model->one($id);
+                    $this->data = $this->model->dbSafeConvert($this->model->one($id));
                 } else {
 
                     $input = !empty($_GET) ? $_GET: [];

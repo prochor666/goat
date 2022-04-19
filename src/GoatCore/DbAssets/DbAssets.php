@@ -195,57 +195,6 @@ class DbAssets implements \GoatCore\Interfaces\IDbAssets
     }
 
 
-    public function fromDb($value, $forceAssoc = true)
-    {
-        if (!is_string($value)) { return $value; }
-
-        if (strlen($value) < 2) { return $value; }
-
-        // Any needle JSON string has to be wrapped in {} or [].
-        if ('{' != $value[0] && '[' != $value[0]) { return $value; }
-
-        // Verify that the trailing character matches the first character.
-        $lastChar = $value[strlen($value) -1];
-        if ('{' == $value[0] && '}' != $lastChar) { return $value; }
-        if ('[' == $value[0] && ']' != $lastChar) { return $value; }
-
-        return json_decode($value, $forceAssoc);
-    }
-
-
-    public function dbSafe($input)
-    {
-        foreach ($input as $key => $value) {
-
-            $input[$key] = $this->toDb($value);
-        }
-
-        return $input;
-    }
-
-
-    public function toDb($value)
-    {
-        if (is_array($value) || is_object($value)) {
-
-            return json_encode($value);
-        }
-
-        if (is_null($value) || is_resource($value)) {
-
-            return '';
-        }
-
-        if (is_bool($value)) {
-
-            return $value ? 1: 0;
-        }
-
-
-        return $value;
-    }
-
-
     protected function prepare($type = false)
     {
         return R::dispense(!$type ? $this->type: $type);

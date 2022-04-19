@@ -36,12 +36,11 @@ class MetaModel extends BasicAssetModel
                 'required'             => true,
                 'options'              => false,
             ],
-            'apply' => [
-                'validation_method'    => 'arrayOf',
-                'default'              => [],
-                'options'              => [
-                    'validation_method' => 'string'
-                ],
+            'target' => [
+                'validation_method'    => 'string',
+                'default'              => 'users',
+                'required'             => true,
+                'options'              => false,
             ],
             'default' => [
                 'validation_method'    => 'array',
@@ -64,7 +63,7 @@ class MetaModel extends BasicAssetModel
 
 
     /**
-    * Create new nav
+    * Create new meta
     * @param array $input
     * @return array
     */
@@ -93,7 +92,7 @@ class MetaModel extends BasicAssetModel
             ];
         }
 
-        // Check same nav name
+        // Check same meta tag
         if ($this->exists(' tag LIKE ? AND domains_id = ? ', [$input['tag'], $input['domains_id']]) === true) {
 
             return [
@@ -101,7 +100,7 @@ class MetaModel extends BasicAssetModel
             ];
         }
 
-        $input = $this->assets->dbSafe($input);
+        $input = $this->dbSafe($input);
 
         $input = $this->extend($input, 'create');
         $created = $this->assets->oneToMany($domain, $this->assets->getType(), [$input]);
@@ -120,7 +119,7 @@ class MetaModel extends BasicAssetModel
 
 
     /**
-    * Full update existing nav
+    * Full update existing meta
     * @param int $id
     * @param array $input
     * @return array
@@ -150,7 +149,7 @@ class MetaModel extends BasicAssetModel
             ];
         }
 
-        // Check same nav name and exclude updated id
+        // Check same meta tag and exclude updated id
         $exists = $this->exists(' tag LIKE ? AND id != ? ', [$input['tag'], $id]);
 
         if ($exists === true) {
@@ -159,6 +158,8 @@ class MetaModel extends BasicAssetModel
                 'error' => "Meta with tag {$input['tag']} already exists",
             ];
         }
+
+        $input = $this->dbSafe($input);
 
         $input = $this->extend($input, 'update');
         $updated = $this->assets->update($id, $input);
@@ -177,7 +178,7 @@ class MetaModel extends BasicAssetModel
 
 
     /**
-    * Partial update for existing nav
+    * Partial update for existing meta
     * @param int $id
     * @param array $input
     * @return array
@@ -232,7 +233,7 @@ class MetaModel extends BasicAssetModel
 
 
     /**
-    * Hard & soft delete existing nav
+    * Hard & soft delete existing meta
     * @param int $id
     * @param bool $soft
     * @return array

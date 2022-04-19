@@ -49,6 +49,7 @@ class OrderPatchModel extends BasicAssetModel
         $this->allowed = [
             'navs',
             'pages',
+            'meta',
         ];
     }
 

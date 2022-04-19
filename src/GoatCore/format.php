@@ -8,7 +8,7 @@
 function urlSafe($str, $delimiter='-'): string
 {
     // Make sure string is in UTF-8 and strip invalid UTF-8 characters
-    $str = mb_convert_encoding((string)$str, 'UTF-8', mb_list_encodings());
+    // $str = mb_convert_encoding((string)$str, 'UTF-8', mb_list_encodings());
     $charMap = [
         // Latin
         'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A', 'Æ' => 'AE', 'Ç' => 'C',
