@@ -198,7 +198,6 @@ class BasicAssetModel
     }
 
 
-
     /**
     * Extend or update input with unified creator, updater, delete info
     * @param array $input

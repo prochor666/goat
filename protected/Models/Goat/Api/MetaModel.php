@@ -24,19 +24,26 @@ class MetaModel extends BasicAssetModel
                 'required'             => true,
                 'options'              => ['min' => 1, 'max' => 255],
             ],
-            'name' => [
-                'validation_method'    => 'string',
-                'default'              => '',
-                'required'             => true,
-                'options'              => ['min' => 1, 'max' => 255],
-            ],
             'type' => [
                 'validation_method'    => 'string',
-                'default'              => 0,
+                'default'              => 'text',
                 'required'             => true,
                 'options'              => false,
             ],
-            'settings' => [
+            'widget' => [
+                'validation_method'    => 'string',
+                'default'              => 'text',
+                'required'             => true,
+                'options'              => false,
+            ],
+            'apply' => [
+                'validation_method'    => 'arrayOf',
+                'default'              => [],
+                'options'              => [
+                    'validation_method' => 'string'
+                ],
+            ],
+            'default' => [
                 'validation_method'    => 'array',
                 'default'              => [],
                 'required'             => true,
@@ -93,6 +100,8 @@ class MetaModel extends BasicAssetModel
                 'error' => "Meta with tag {$input['tag']} already exists",
             ];
         }
+
+        $input = $this->assets->dbSafe($input);
 
         $input = $this->extend($input, 'create');
         $created = $this->assets->oneToMany($domain, $this->assets->getType(), [$input]);
