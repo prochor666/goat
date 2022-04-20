@@ -31,86 +31,51 @@ class Storage
 
     public function dir($domains_id, $relativePath = '', $type = 'public'): array
     {
+
+
         $data =  [
             'status' => false,
             'dir'   => [],
             'path'  => '',
         ];
 
+        $dir = false;
+
         if ($type === 'content') {
 
             $dir = $this->for($domains_id, 'public') . DIRECTORY_SEPARATOR . 'content' . DIRECTORY_SEPARATOR . $this->enumeratePath($relativePath);
-
-            if ($this->isDir($dir)) {
-
-                $content = $this->listDirInfo($dir);
-
-                $data = [
-                    'status' => true,
-                    'dir'   => $content,
-                    'path'  => $dir,
-                ];
-            }
         }
 
 
         if ($type === 'cache') {
 
             $dir = $this->for($domains_id, 'public') . DIRECTORY_SEPARATOR . 'cache' . $this->enumeratePath($relativePath);
-
-            if ($this->isDir($dir)) {
-
-                $content = $this->listDirInfo($dir);
-
-                $data = [
-                    'status' => true,
-                    'dir'   => $content,
-                    'path'  => $dir,
-                ];
-            }
         }
 
 
         if ($type === 'public') {
 
             $dir = $this->for($domains_id, 'public') . DIRECTORY_SEPARATOR . $this->enumeratePath($relativePath);
-
-            if ($this->isDir($dir)) {
-
-                $content = $this->listDirInfo($dir);
-
-                $data = [
-                    'status' => true,
-                    'dir'   => $content,
-                    'path'  => $dir,
-                ];
-            }
         }
 
 
         if ($type === 'storage') {
 
             $dir = $this->for($domains_id, 'storage') . DIRECTORY_SEPARATOR . $this->enumeratePath($relativePath);
-
-            if ($this->isDir($dir)) {
-
-                $content = $this->listDirInfo($dir);
-
-                $data = [
-                    'status' => true,
-                    'dir'   => $content,
-                    'path'  => $dir,
-                ];
-            }
         }
 
         if ($type === 'temp') {
 
             $dir = $this->for($domains_id, 'temp') . DIRECTORY_SEPARATOR . $this->enumeratePath($relativePath);
+        }
+
+        if ($dir !== false) {
+
+            $dir = trim($dir, '\\');
 
             if ($this->isDir($dir)) {
 
-                $content = $this->listDirInfo($dir, false);
+                $content = $this->listDirInfo($dir);
 
                 $data = [
                     'status' => true,

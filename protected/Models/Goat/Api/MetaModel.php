@@ -233,6 +233,30 @@ class MetaModel extends BasicAssetModel
 
 
     /**
+    * Extract meta JSON default
+    * @param array $input
+    * @return array
+    */
+    public function extract($input): array
+    {
+        $extract = (int)ark($input, 'extract', 0);
+
+        $result = $this->find($input);
+
+        if ($extract === 1) {
+
+            $result = array_map( function(object $item): object
+            {
+                $item['default'] = json_decode($item['default'], true);
+                return $item;
+            }, $result);
+        }
+
+        return $result;
+    }
+
+
+    /**
     * Hard & soft delete existing meta
     * @param int $id
     * @param bool $soft

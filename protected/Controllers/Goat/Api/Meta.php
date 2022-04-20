@@ -77,7 +77,7 @@ class Meta implements IApiController
                 } else {
 
                     $input = !empty($_GET) ? $_GET: [];
-                    $this->data = $this->model->find($input);
+                    $this->data = $this->model->extract($input);
                 }
         }
 
