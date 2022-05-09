@@ -16,7 +16,7 @@ class Url
     */
     public function __construct($path = NULL)
     {
-        if (is_null($path)) {
+        if (is_null($path) && isset($_SERVER) && ark($_SERVER, 'HTTP_HOST', false) !== false && ark($_SERVER, 'REQUEST_URI', false) !== false) {
             $this->originPath = (ssl() ? "https" : "http") . "://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
         } else {
             $this->originPath = (string)$path;

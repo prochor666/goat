@@ -45,7 +45,7 @@ class DomainsModel extends BasicAssetModel
                 'options'              => ['min' => 0, 'max' => 1],
             ],
             'langs' => [
-                'validation_method'    => 'arrayOf',
+                'validation_method'    => 'array',
                 'required'             => true,
                 'options'              => [
                     'validation_method' => 'lang',
@@ -57,7 +57,7 @@ class DomainsModel extends BasicAssetModel
                 'options'              => ['min' => 1, 'max' => 3],
             ],
             'aliases' => [
-                'validation_method'    => 'arrayOf',
+                'validation_method'    => 'array',
                 'default'              => [],
                 'required'             => false,
                 'options'              => [
@@ -269,6 +269,25 @@ class DomainsModel extends BasicAssetModel
         return [
             'patched' => $this->assets->update($id, $input),
         ];
+    }
+
+
+    /**
+    * Attach lang and aliases for all domains
+    * @param array $input
+    * @return array
+    */
+    public function findRelated($input): array
+    {
+        $domains = $this->find($input);
+
+        foreach ($domains as $key => $domain) {
+
+            $this->related($domains[$key], 'langs');
+            $this->related($domains[$key], 'aliases');
+        }
+
+        return $domains;
     }
 
 

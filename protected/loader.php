@@ -36,6 +36,9 @@ function webLoader($goatCore): void
     $goatCore->store->entry(
         new \Goat\Template($goatCore->store->entry('Goat\Storage'))
     );
+    $goatCore->store->entry(
+        new \Goat\Meta()
+    );
 }
 
 

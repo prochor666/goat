@@ -21,10 +21,11 @@ class OrderPatchModel extends BasicAssetModel
 
         $this->predefined = [
             'collection' => [
-                'validation_method'    => 'arrayOf',
+                'validation_method'    => 'array',
                 'default'              => [],
                 'options'              => [
                     'validation_method' => 'array',
+                    'empty_valid'       => false
                 ]
             ],
             'type' => [

@@ -65,6 +65,7 @@ class SeedModel extends BasicAssetModel
             'history_created' => [],
             'users_created' => [],
             'session_created' => [],
+            'meta_created' => [],
         ];
 
         $varchar = str_repeat('a', 255);
@@ -127,7 +128,21 @@ class SeedModel extends BasicAssetModel
                 'username'  => '',
                 'userid'    => 0
             ]);
+
         }
+
+        $temporaryType = $this->assets->swapType('metavalues');
+
+        $dataset = $this->extend([
+            'target' => 'blind',
+            'tag' => 'blind',
+            'type' => 'string',
+            'value' => $blob,
+        ], 'none');
+        $metaID = $this->assets->create($dataset);
+        $result['meta_created'][] = $metaID;
+        $this->assets->delete($metaID);
+        $this->assets->swapType($temporaryType);
 
         return $result;
     }

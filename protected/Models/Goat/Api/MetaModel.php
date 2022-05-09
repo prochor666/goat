@@ -241,18 +241,30 @@ class MetaModel extends BasicAssetModel
     {
         $extract = (int)ark($input, 'extract', 0);
 
-        $result = $this->find($input);
+        $result = [
+            'metatags' => $this->find($input),
+            'input' => $input,
+        ];
 
         if ($extract === 1) {
 
-            $result = array_map( function(object $item): object
+            foreach($result['metatags'] as $k => $v) {
+
+                $v->extracted = true;
+                $result['metatags'][$k] = $this->dbSafeConvert($v, true);
+            }
+
+/*
+            $result['metatags'] = array_map( function(object $item): object
             {
-                $item['default'] = json_decode($item['default'], true);
+                $item->default = json_decode($item->default, true); //$this->dbSafeConvert($item, true);
+                $item->extracted = true;
                 return $item;
-            }, $result);
+            }, $result['metatags']);
+*/
         }
 
-        return $result;
+        return $result['metatags'];
     }
 
 

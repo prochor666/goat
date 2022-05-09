@@ -78,7 +78,8 @@ class Domains implements IApiController
                 } else {
 
                     $input = !empty($_GET) ? $_GET: [];
-                    $this->data = $this->model->find($input);
+                    //$this->data = $this->model->find($input);
+                    $this->data = $this->model->findRelated($input);
                 }
         }
 

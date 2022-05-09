@@ -55,7 +55,7 @@ class BasicAssetModel
 
 
     /**
-    * Check if asset exists, return asset, PDO syntax
+    * Check if asset exists, return empty asset if not, PDO syntax
     * @param string $cols
     * @param array $values
     * @return object
@@ -128,6 +128,7 @@ class BasicAssetModel
 
             $validate = false;
 
+            $test_value = is_array($inputPropertyValue) ? $inputPropertyValue: (string)$inputPropertyValue;
 
             // Allow empty value, when required is false
             if ($required === false && $inputPropertyValue !== false && is_callable([$this, $validationMethod]) && $this->isEmptyValue($inputPropertyValue) === false) {
@@ -235,7 +236,7 @@ class BasicAssetModel
             ]);
         }
 
-        return [];
+        return $input;
     }
 
 
@@ -384,6 +385,46 @@ class BasicAssetModel
     public function toDbJSON($value): string
     {
         return json_encode($value);
+    }
+
+
+    /**
+    * Convert array or object to JSON string
+    * @param int $id
+    * @param string $target
+    * @param array $item
+    * @return array
+    */
+    protected function storeMetaValue($id, $tag, $target, $item): array
+    {
+        $temporaryType = $this->assets->swapType('metavalues');
+
+        $options = [];
+
+        // Check meta record
+        $metaExists = $this->existsWithData(' targetid = ? AND tag LIKE ? AND target LIKE ? ', [$item['id'], $tag, $target]);
+
+        $item['realvalue']['value'] = call_user_func_array(
+            [$this, $item['validate_as']],
+            [$item['realvalue']['value'], $options]
+        ) ? $item['realvalue']['value']: false;
+
+        if ($item['realvalue']['value'] === false) {
+
+            return $item;
+        }
+
+        if ($metaExists->id > 0) {
+
+            $this->assets->update($metaExists->id, $item);
+        } else {
+
+            $this->assets->create($item);
+        }
+
+        $this->assets->setType($temporaryType);
+
+        return $item;
     }
 
 

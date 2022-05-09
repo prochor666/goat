@@ -59,8 +59,8 @@ class DbAssets implements \GoatCore\Interfaces\IDbAssets
 
     public function oneToMany($relation, $prop, $data)
     {
-        $lisKey = ucfirst($prop);
-        $listName = "own{$lisKey}List";
+        $listKey = ucfirst($prop);
+        $listName = "own{$listKey}List";
 
         if (!is_array($data)) {
 

@@ -141,17 +141,6 @@ trait Validator
 
 
     /**
-    * Validate array value
-    * @param mixed $value
-    * @return bool
-    */
-    public function array($value): bool
-    {
-        return is_array($value);
-    }
-
-
-    /**
     * Validate string value, min and max length optional validation
     * @param mixed $value
     * @param array $options
@@ -183,14 +172,20 @@ trait Validator
 
     /**
     * Validate array value, optional sub validator for values
-    * Empty array is valid
     * @param mixed $value
     * @param array $subvalidator
     * @return bool
     */
-    public function arrayOf($value, $options = []): bool
+    public function array($value, $options = []): bool
     {
-        if (!is_array($value) || count($value) === 0) {
+        $empty_valid  = ark($options, 'empty_valid', true);
+
+        if (!is_array($value)) {
+
+            return false;
+        }
+
+        if ($empty_valid === false && count($value) === 0) {
 
             return false;
         }
@@ -215,6 +210,48 @@ trait Validator
         }
 
         return true;
+    }
+
+
+    /**
+    * Validate color value
+    * possible formats HEX, RGB/RGBA, HSL/HSLA
+    * @param mixed $value
+    * @return bool
+    */
+    public function color($value) {
+
+        $patterns = [
+            'hex'   =>  '/^\#[0-9a-f]{3}([0-9a-f]{3})?$/i',
+            'ahex'  =>  '/^\#[0-9a-f]{4}([0-9a-f]{4})?$/i',
+            'rgb'   =>  '/^rgb\((((25[0-5]|2[0-4]\d|1\d{1,2}|\d\d?)\s*?,\s*?){2}(25[0-5]|2[0-4]\d|1\d{1,2}|\d\d?)\s*?)?\)$/i',
+            'rgba'  =>  '/^rgba\(\s*(-?\d+|-?\d*\.\d+(?=%))(%?)\s*,\s*(-?\d+|-?\d*\.\d+(?=%))(\2)\s*,\s*(-?\d+|-?\d*\.\d+(?=%))(\2)\s*,\s*(0?\.\d*|0(\.\d*)?|1)?\s*\)$/i',
+            'hsl'   =>  '/^hsl\(\s*(-?\d+|-?\d*.\d+)\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(-?\d+|-?\d*.\d+)%\s*\)$/i',
+            'hsla'  =>  '/^hsla\(\s*(-?\d+|-?\d*.\d+)\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(0?\.\d*|0(\.\d*)?|1)?\s*\)$/i',
+        ];
+
+        foreach ($patterns as $pattern) {
+
+            if (preg_match_all($pattern, $value)) {
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    /**
+    * Validate date value by the given format
+    * @param string $value
+    * @param string $format
+    * @return bool
+    */
+    public function date($value, $format = 'Y-m-d H:i:s')
+    {
+        $d = \DateTime::createFromFormat($format, $value);
+        return $d && $d->format($format) == $value;
     }
 
 

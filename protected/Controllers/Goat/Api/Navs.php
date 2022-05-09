@@ -62,6 +62,7 @@ class Navs implements IApiController
                 break;
 
             case 'delete':
+                // Remove nav
                 $id = (int)$route->index($route->count() - 1);
                 $input = json_decode(file_get_contents('php://input'), true);
                 $this->data = $this->model->delete($id, ark($input, 'soft', true));
@@ -73,10 +74,11 @@ class Navs implements IApiController
                 if ($id > 0) {
 
                     $this->data = $this->model->one($id);
+                    $this->data = $this->model->metaService->attach($this->data, 'navs');
                 } else {
 
                     $input = !empty($_GET) ? $_GET: [];
-                    $this->data = $this->model->find($input);
+                    $this->data = $this->model->findRelated($input);
                 }
         }
 

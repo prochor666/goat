@@ -13,6 +13,8 @@ use Goat\BasicAssetModel;
 */
 class NavsModel extends BasicAssetModel
 {
+    public $metaService;
+
     public function __construct(GoatCore $app, DbAssets $assets)
     {
         parent::__construct($app, $assets);
@@ -39,6 +41,8 @@ class NavsModel extends BasicAssetModel
                 'options'              => ['min' => 0, 'max' => 1],
             ],
         ];
+
+        $this->metaService = $this->app->store->entry('Goat\Meta');
     }
 
 
@@ -80,13 +84,33 @@ class NavsModel extends BasicAssetModel
             ];
         }
 
+        // Meta validation processs
+        $metaTags = ark($input, 'metatags', []);
+
+        $metaValidated = $this->metaService->validate($domain->id, 'navs', $metaTags);
+
+        if ($this->metaService->canSave === false) {
+
+            $input['metatags'] = $metaValidated;
+
+            return [
+                'error' => 'Meta data validation failed',
+                'input' => $input,
+            ];
+        }
+
+        unset($input['metatags']);
+
         $input = $this->extend($input, 'create');
         $created = $this->assets->oneToMany($domain, $this->assets->getType(), [$input]);
 
         if ($created > 0) {
 
+            $metaSaved = $this->metaService->save($created, $metaValidated);
+
             return [
                 'created' => $created,
+                'metaSaved' => $metaSaved,
             ];
         }
 
@@ -137,13 +161,33 @@ class NavsModel extends BasicAssetModel
             ];
         }
 
+        // Meta processs
+        $metaTags = ark($input, 'metatags', []);
+
+        $metaValidated = $this->metaService->validate($domain->id, 'navs', $metaTags);
+
+        if ($this->metaService->canSave === false) {
+
+            $input['metatags'] = $metaValidated;
+
+            return [
+                'error' => 'Meta data validation failed',
+                'input' => $input,
+            ];
+        }
+
+        unset($input['metatags']);
+
         $input = $this->extend($input, 'update');
         $updated = $this->assets->update($id, $input);
 
         if ($updated > 0) {
 
+            $metaSaved = $this->metaService->save($updated, $metaValidated);
+
             return [
                 'updated' => $updated,
+                'metaSaved' => $metaSaved,
             ];
         }
 
@@ -200,6 +244,8 @@ class NavsModel extends BasicAssetModel
             }
         }
 
+        unset($input['metatags']);
+
         $input = $this->extend($input, 'update');
 
         return [
@@ -231,6 +277,15 @@ class NavsModel extends BasicAssetModel
             'deleted' => $this->assets->delete($id),
             'soft' => $soft,
         ];
+    }
+
+
+    public function findRelated($input)
+    {
+        $data = $this->find($input);
+        $data = $this->metaService->attach($data, 'navs');
+
+        return $data;
     }
 
 
