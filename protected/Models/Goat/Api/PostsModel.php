@@ -21,12 +21,12 @@ class PostsModel extends BasicAssetModel
             'title' => [
                 'validation_method'    => 'string',
                 'default'              => '',
-                'options'              => ['min' => 1, 'max' => 255],
+                'options'              => ['min' => 0, 'max' => 255],
             ],
             'slug' => [
                 'validation_method'    => 'string',
                 'default'              => '',
-                'options'              => ['min' => 1, 'max' => 255],
+                'options'              => ['min' => 0, 'max' => 255],
             ],
             'annotation' => [
                 'validation_method'    => 'string',
@@ -41,7 +41,7 @@ class PostsModel extends BasicAssetModel
             'image' => [
                 'validation_method'    => 'string',
                 'default'              => '',
-                'options'              => ['min' => 0],
+                'options'              => false,
             ],
             'order' => [
                 'validation_method'    => 'int',
@@ -61,7 +61,7 @@ class PostsModel extends BasicAssetModel
             'date_publish' => [
                 'validation_method'    => 'string',
                 'default'              => $this->assets->isoDateTime(),
-                'options'              => ['min' => 1],
+                'options'              => false,
             ]
         ];
     }
@@ -87,7 +87,7 @@ class PostsModel extends BasicAssetModel
             ];
         }
 
-        // Check domain id
+        // Check page id
         $page = $this->getPage($input['pages_id']);
 
         if ($page->id === 0) {
@@ -97,13 +97,16 @@ class PostsModel extends BasicAssetModel
             ];
         }
 
-        // Check same page slug
-        if ($this->exists(' slug LIKE ? AND pages_id = ? ', [$input['slug'], $input['pages_id']]) !== false) {
+        // Create slug
+        $input['slug'] = urlSafe( mb_strlen($input['title']) > 0 ? $input['title']: rnd(17) );
+
+        // Check same post slug
+/*         if ($this->exists(' slug LIKE ? AND pages_id = ? ', [$input['slug'], $input['pages_id']]) !== false) {
 
             return [
                 'error' => "Post with slug {$input['slug']} already exists",
             ];
-        }
+        } */
 
         $input = $this->extend($input, 'create');
         $created = $this->assets->oneToMany($page, $this->assets->getType(), [$input]);
@@ -145,14 +148,17 @@ class PostsModel extends BasicAssetModel
         // Check domain id
         $page = $this->getPage($input['pages_id']);
 
-        if ($domain->id === 0) {
+        if ($page->id === 0) {
 
             return [
                 'error' => "Specified page does not exist",
             ];
         }
 
-        // Check same page slug and exclude updated id
+        // Create slug
+        $input['slug'] = urlSafe( mb_strlen($input['title']) > 0 ? $input['title']: rnd(17) );
+
+        // Check same post slug and exclude updated id
         $exists = $this->exists(' slug LIKE ? AND pages_id = ? AND id != ? ', [$input['slug'], $input['pages_id'], $id]);
 
         if ($exists === true) {
@@ -220,7 +226,7 @@ class PostsModel extends BasicAssetModel
             if ($exists === true) {
 
                 return [
-                    'error' => "Page with slug {$input['slug']} already exists",
+                    'error' => "Post with slug {$input['slug']} already exists",
                 ];
             }
         }
