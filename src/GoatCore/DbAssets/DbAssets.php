@@ -16,7 +16,6 @@ class DbAssets implements \GoatCore\Interfaces\IDbAssets
     {
         $this->type = (string)$type;
         $this->collection = [];
-        //R::debug(true, 2);
     }
 
 

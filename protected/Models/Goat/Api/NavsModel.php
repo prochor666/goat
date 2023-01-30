@@ -99,7 +99,10 @@ class NavsModel extends BasicAssetModel
             ];
         }
 
+        //echo dd($input, $domain);
+
         unset($input['metatags']);
+        unset($input['metavalues']);
 
         $input = $this->extend($input, 'create');
         $created = $this->assets->oneToMany($domain, $this->assets->getType(), [$input]);

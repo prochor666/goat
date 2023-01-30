@@ -6,8 +6,17 @@
             "password": "install",
             "firstname": "System",
             "lastname": "Administrator",
-            "active": 0,
+            "active": 1,
             "role": "admin"
+        },
+        {
+            "username": "editor",
+            "email": "editor@l.com",
+            "password": "install",
+            "firstname": "System",
+            "lastname": "Editor",
+            "active": 1,
+            "role": "user"
         }
     ],
     "history": [

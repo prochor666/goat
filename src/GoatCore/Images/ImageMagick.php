@@ -7,8 +7,8 @@ namespace GoatCore\Images;
 */
 class ImageMagick
 {
-    public $imageSource, $imageTarget, $compression, $permissions, $fixExifRotation;
-    protected $image, $imageInfo, $imageType, $exif;
+    public $imageSource, $imageTarget, $compression, $permissions, $fixExifRotation, $clearMeta;
+    protected $imagick, $image, $imageInfo, $imageType, $exif;
 
     /**
     * Image class contructor, default value set
@@ -17,12 +17,13 @@ class ImageMagick
     */
     public function __construct()
     {
-        $this->image = null;
+        $this->imagick = new \Imagick();
+        $this->imageSource = $this->imagick->newImage(1, 1, new \ImagickPixel('#ffffff'));
+        //$this->image = new \Imagick($this->imageSource);
         $this->exif = false;
-        $this->imageType = null;
+        $this->imageType = '';
         $this->imageInfo = [];
-        $this->imageSource = null;
-        $this->imageTarget = null;
+        $this->imageTarget = '';
         $this->compression = 100;
         $this->permissions = 0777;
         $this->fixExifRotation = true;
@@ -45,7 +46,7 @@ class ImageMagick
             $this->image = new \Imagick($this->imageSource);
             $this->imageType = strtolower($this->image->getImageFormat());
 
-            if ($this->imageType !== false) {
+            if ($this->imageType !== '') {
 
                 switch ($this->imageType) {
 
@@ -229,7 +230,7 @@ class ImageMagick
         $this->image->setImageFormat($format);
         if ($format === 'jpg' || $format === 'jpeg' || $format === 'jpe') {
 
-            $this->image->setImageCompression(\imagick::COMPRESSION_JPEG);
+            $this->image->setImageCompression(\Imagick::COMPRESSION_JPEG);
         }
         $this->image->setCompressionQuality($this->compression);
 

@@ -19,10 +19,10 @@ class ImageGD
     {
         $this->image = false;
         $this->exif = false;
-        $this->imageType = null;
+        $this->imageType = '';
         $this->imageInfo = [];
         $this->imageSource = null;
-        $this->imageTarget = null;
+        $this->imageTarget = '';
         $this->compression = 100;
         $this->permissions = 0777;
         $this->fixExifRotation = true;
@@ -94,7 +94,7 @@ class ImageGD
 
                 $this->exif = @exif_read_data(fopen($this->imageSource, 'rb'), 'FILE,COMPUTED,IFD0,EXIF', true, false);
 
-            } catch (Throwable $e) {
+            } catch (\Throwable $e) {
 
                 $this->exif = false;
             }
@@ -108,7 +108,7 @@ class ImageGD
                         $this->flip(1);
                     break; case 3: // 180 rotate left
 
-                        rotateImage($public,180);
+                        $this->rotate(180);
                     break; case 4: // vertical flip
 
                         $this->flip(2);

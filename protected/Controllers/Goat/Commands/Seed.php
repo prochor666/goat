@@ -29,7 +29,7 @@ class Seed implements ICommandsController
 
     public function setup(): object
     {
-        $this->model = new SeedModel($this->app, new DbAssets('user'));
+        $this->model = new SeedModel($this->app, new DbAssets('users'));
         $this->input = $this->model->release();
 
         return $this;

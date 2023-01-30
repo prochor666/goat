@@ -298,7 +298,7 @@ function redirect($url = null)
 
 
 /**
-* Sned custom HTTP status code
+* Send custom HTTP status code
 * @param string $headerStatus
 * @return void
 */

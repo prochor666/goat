@@ -65,5 +65,6 @@ class Db implements \GoatCore\Interfaces\IDb
         $dsn = "{$this->config['engine']}:host={$this->config['host']};port={$this->config['port']};dbname={$this->config['name']}";
 
         return R::setup($dsn, $this->config['username'], $this->config['password']);
+        R::debug(true, 2);
     }
 }

@@ -1,5 +1,5 @@
 <?php
-define('GOAT_ROOT', __DIR__ . '/..');
+define('GOAT_ROOT', '.');
 define('GOAT_REL', dirname($_SERVER['PHP_SELF']));
 
 /* *******************
@@ -41,26 +41,3 @@ foreach($appConfigFiles as $cf) {
 }
 
 $goatCore->config($config);
-
-// Handle commandline options
-require_once(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'protected'.DIRECTORY_SEPARATOR.'loader.php');
-cliLoader($goatCore, $argv);
-
-$handle = opendir(__DIR__);
-
-while (false !== ($o = readdir($handle))) {
-
-    if (( $o != '.' ) && ( $o != '..' )) {
-
-        $fsObj = __DIR__ . DIRECTORY_SEPARATOR . $o;
-        $index = $fsObj . DIRECTORY_SEPARATOR . 'index.php';
-
-        if (is_dir($fsObj) && file_exists($index)) {
-
-            echo "======= {$fsObj} test: ======= \n\n";
-            require_once($index);
-        }
-    }
-}
-
-closedir($handle);
