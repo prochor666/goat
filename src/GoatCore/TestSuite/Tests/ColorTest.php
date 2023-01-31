@@ -6,15 +6,13 @@ use PHPUnit\Framework\TestCase;
 * ****************** */
 require_once('./src/GoatCore/TestSuite/_init.php');
 
-use GoatCore\Traits\Validator;
-
 final class ColorTest extends TestCase
 {
     use \GoatCore\Traits\Validator;
 
-    public function getColorsProvider(): array
+    public function getDataProvider(): array
     {
-        $colors = [
+        $data = [
             ['#A12C', true],
             ['#FF00AA22', true],
             ['#FF00AA', true],
@@ -41,14 +39,16 @@ final class ColorTest extends TestCase
             ['adsasd', false],
         ];
 
-        return $colors;
+        return $data;
     }
 
     /**
-    * @dataProvider getColorsProvider
+    * @dataProvider getDataProvider
     */
-    public function testRun($color, $expect): void
+    public function testRun($data, $expect): void
     {
-        $this->assertSame($expect, $this->color($color));
+        $dataMem = !is_array($data) ? (string)$data: gettype($data);
+        
+        $this->assertSame($expect, $this->color($data), "assertSame: $dataMem " . ($expect ? "true": "false" ) ."");
     }
 }

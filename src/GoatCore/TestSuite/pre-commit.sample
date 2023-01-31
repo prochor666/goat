@@ -1,0 +1,54 @@
+#!/usr/bin/env php
+
+<?php
+echo "🚀 Running tests.. \n\n";
+
+function scanTargetDirHelper ($dir, $indent = 2) {
+    $buffer = '';
+    $ls = scandir($dir);
+
+    foreach ($ls as $fsObject) {
+        
+        if ($fsObject !== '.' && $fsObject !== '..') {
+            $isDir = is_dir($dir . "/" . $fsObject);
+            $icon = $isDir ? "📂 ": "🗎 ";
+            $buffer .= str_repeat(" ", $indent) . $icon . $fsObject . "\n";
+            if ($isDir) {
+                $buffer .= scanTargetDirHelper($dir . "/" . $fsObject, $indent + $indent);
+            }
+        }
+    }
+
+    return $buffer;
+}
+
+$output = null;
+$returnCode = 0;
+$phpUnitDir = "./vendor/bin";
+$GoatCoreTestsDir = "./src/GoatCore/TestSuite";
+
+echo "💾 PHPUnit location: " . $phpUnitDir . "\n";
+
+echo "💾 Tests target location: $GoatCoreTestsDir \n";
+echo "💿 Scan: \n";
+echo scanTargetDirHelper($GoatCoreTestsDir);
+echo "\n";
+
+exec(str_replace("/", DIRECTORY_SEPARATOR, $phpUnitDir) . DIRECTORY_SEPARATOR . "phpunit --testdox --verbose src\GoatCore\TestSuite\Tests", $output, $returnCode);
+
+if ($returnCode !== 0) {
+  // Show full output
+  echo PHP_EOL . implode(PHP_EOL, $output) . PHP_EOL;
+  echo "! Aborting commit.." . PHP_EOL;
+  exit(1);
+}
+
+// Show summary (last line)
+echo "📟 Output RAW (unit tests) \n";
+foreach ($output as $row) {
+    echo $row . "\n";
+}
+echo "📟 EOF";
+
+exit(0);
+

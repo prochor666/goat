@@ -81,7 +81,7 @@ trait Validator
     */
     public function domain($value): bool
     {
-        return (bool)filter_var($value, FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME);
+        return is_string($value) ? (bool)filter_var($value, FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME): false;
     }
 
 
@@ -92,7 +92,7 @@ trait Validator
     */
     public function email($value): bool
     {
-        return (bool)filter_var($value, FILTER_VALIDATE_EMAIL);
+        return is_string($value) ? (bool)filter_var($value, FILTER_VALIDATE_EMAIL): false;
     }
 
 
@@ -103,7 +103,7 @@ trait Validator
     */
     public function url($value): bool
     {
-        return (bool)filter_var($value, FILTER_VALIDATE_URL);
+        return is_string($value) ? (bool)filter_var($value, FILTER_VALIDATE_URL): false;
     }
 
 
@@ -114,7 +114,7 @@ trait Validator
     */
     public function ip($value): bool
     {
-        return (bool)filter_var($value, FILTER_VALIDATE_IP);
+        return is_string($value) ? (bool)filter_var($value, FILTER_VALIDATE_IP): false;
     }
 
 
@@ -125,7 +125,7 @@ trait Validator
     */
     public function mac($value): bool
     {
-        return (bool)filter_var($value, FILTER_VALIDATE_MAC);
+        return is_string($value) ? (bool)filter_var($value, FILTER_VALIDATE_MAC): false;
     }
 
 
@@ -136,7 +136,7 @@ trait Validator
     */
     public function bool($value): bool
     {
-        return (bool)filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        return (bool)filter_var($value, FILTER_VALIDATE_BOOLEAN);
     }
 
 
