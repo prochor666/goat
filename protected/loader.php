@@ -16,7 +16,8 @@ function webLoader($goatCore): void
         new \Goat\Storage($goatCore->config('fsRoot'))
     );
     $goatCore->store->entry(
-        new \Goat\Image($goatCore->config('image')['useImageMagick'])
+        //new \Goat\Image($goatCore->config('image')['useImageMagick'])
+        new \Goat\Image()
     );
     $goatCore->store->entry(
         new \Goat\Thumbnail(
@@ -34,6 +35,9 @@ function webLoader($goatCore): void
         new \Goat\Disk()
     );
     $goatCore->store->entry(
+        new \Goat\Validator()
+    );
+    $goatCore->store->entry(
         new \Goat\Template($goatCore->store->entry('Goat\Storage'))
     );
     $goatCore->store->entry(
@@ -48,6 +52,12 @@ function cliLoader($goatCore, $argv): void
     $goatCore->store->entry($command);
     $goatCore->store->entry(new GoatCore\Db\Db($goatCore->config('database')));
     $goatCore->store->entry(
-        new Goat\Image($goatCore->config('image')['useImageMagick'])
+        new Goat\Image()
+    );
+    $goatCore->store->entry(
+        new \Goat\Disk()
+    );
+    $goatCore->store->entry(
+        new \Goat\Validator()
     );
 }

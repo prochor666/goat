@@ -1,16 +1,21 @@
 <?php
+/**
+ * @doc blabla
+ */
 use GoatCore\Base\Autoloader;
 use GoatCore\Base\Store;
 use GoatCore\GoatCore;
 
-Autoloader::init()->register([
+Autoloader::init()->register(
+    [
     GOAT_ROOT . '/protected/Controllers',
     GOAT_ROOT . '/protected/Models',
     GOAT_ROOT . '/protected/Views',
     GOAT_ROOT . '/protected/Interfaces',
     GOAT_ROOT . '/protected/Traits',
     GOAT_ROOT . '/protected/Services',
-]);
+    ]
+);
 
 use Goat\Cmd;
 
@@ -25,18 +30,18 @@ $appConfigFiles = [
     'mail-config.php',
 ];
 
-foreach($appConfigFiles as $cf) {
+foreach ($appConfigFiles as $cf) {
 
     if (file_exists("{$appConfigRoot}/{$cf}")) {
 
-        require_once("{$appConfigRoot}/{$cf}");
+        include_once "{$appConfigRoot}/{$cf}";
     }
 }
 
 $goatCore->config($config);
 
 // Handle commandline options
-require_once(__DIR__ . '/loader.php');
+require_once __DIR__ . '/loader.php';
 cliLoader($goatCore, $argv);
 
 /* ***************

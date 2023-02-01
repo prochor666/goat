@@ -4,11 +4,12 @@ namespace GoatCore\Traits;
 trait Validator
 {
     /**
-    * Cast && Validate int value, min and max range optional validation
-    * @param mixed $value
-    * @param array $options
-    * @return bool
-    */
+     * Cast && Validate int value, min and max range optional validation
+     *
+     * @param  mixed $value
+     * @param  array $options
+     * @return bool
+     */
     public function int($value, $options = []): bool
     {
         $min = ark($options, 'min', false);
@@ -34,11 +35,12 @@ trait Validator
 
 
     /**
-    * Cast && Validate float value, min and max range optional validation
-    * @param mixed $value
-    * @param array $options
-    * @return bool
-    */
+     * Cast && Validate float value, min and max range optional validation
+     *
+     * @param  mixed $value
+     * @param  array $options
+     * @return bool
+     */
     public function float($value, $options = []): bool
     {
         $min = ark($options, 'min', false);
@@ -64,10 +66,11 @@ trait Validator
 
 
     /**
-    * Cast && Validate numeric value, min and max range optional validation
-    * @param mixed $value
-    * @return bool
-    */
+     * Cast && Validate numeric value, min and max range optional validation
+     *
+     * @param  mixed $value
+     * @return bool
+     */
     public function numeric($value): bool
     {
         return is_numeric($value) ? true: false;
@@ -75,10 +78,11 @@ trait Validator
 
 
     /**
-    * Validate domain value
-    * @param mixed $value
-    * @return bool
-    */
+     * Validate domain value
+     *
+     * @param  mixed $value
+     * @return bool
+     */
     public function domain($value): bool
     {
         return is_string($value) ? (bool)filter_var($value, FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME): false;
@@ -86,10 +90,11 @@ trait Validator
 
 
     /**
-    * Validate domain value
-    * @param mixed $value
-    * @return bool
-    */
+     * Validate domain value
+     *
+     * @param  mixed $value
+     * @return bool
+     */
     public function email($value): bool
     {
         return is_string($value) ? (bool)filter_var($value, FILTER_VALIDATE_EMAIL): false;
@@ -97,10 +102,11 @@ trait Validator
 
 
     /**
-    * Validate URL(not URN) value
-    * @param mixed $value
-    * @return bool
-    */
+     * Validate URL(not URN) value
+     *
+     * @param  mixed $value
+     * @return bool
+     */
     public function url($value): bool
     {
         return is_string($value) ? (bool)filter_var($value, FILTER_VALIDATE_URL): false;
@@ -108,10 +114,11 @@ trait Validator
 
 
     /**
-    * Validate IPv4/IPv6 value
-    * @param mixed $value
-    * @return bool
-    */
+     * Validate IPv4/IPv6 value
+     *
+     * @param  mixed $value
+     * @return bool
+     */
     public function ip($value): bool
     {
         return is_string($value) ? (bool)filter_var($value, FILTER_VALIDATE_IP): false;
@@ -119,10 +126,11 @@ trait Validator
 
 
     /**
-    * Validate MAC address value
-    * @param mixed $value
-    * @return bool
-    */
+     * Validate MAC address value
+     *
+     * @param  mixed $value
+     * @return bool
+     */
     public function mac($value): bool
     {
         return is_string($value) ? (bool)filter_var($value, FILTER_VALIDATE_MAC): false;
@@ -130,10 +138,11 @@ trait Validator
 
 
     /**
-    * Validate boolean value
-    * @param mixed $value
-    * @return bool
-    */
+     * Validate boolean value
+     *
+     * @param  mixed $value
+     * @return bool
+     */
     public function bool($value): bool
     {
         return (bool)filter_var($value, FILTER_VALIDATE_BOOLEAN);
@@ -141,11 +150,12 @@ trait Validator
 
 
     /**
-    * Validate string value, min and max length optional validation
-    * @param mixed $value
-    * @param array $options
-    * @return bool
-    */
+     * Validate string value, min and max length optional validation
+     *
+     * @param  mixed $value
+     * @param  array $options
+     * @return bool
+     */
     public function string($value, $options = []): bool
     {
         $min = ark($options, 'min', 0);
@@ -171,11 +181,12 @@ trait Validator
 
 
     /**
-    * Validate array value, optional sub validator for values
-    * @param mixed $value
-    * @param array $subvalidator
-    * @return bool
-    */
+     * Validate array value, optional sub validator for values
+     *
+     * @param  mixed $value
+     * @param  array $subvalidator
+     * @return bool
+     */
     public function array($value, $options = []): bool
     {
         $empty_valid  = ark($options, 'empty_valid', true);
@@ -214,12 +225,14 @@ trait Validator
 
 
     /**
-    * Validate color value
-    * possible formats HEX, RGB/RGBA, HSL/HSLA
-    * @param mixed $value
-    * @return bool
-    */
-    public function color($value) {
+     * Validate color value
+     * possible formats HEX, RGB/RGBA, HSL/HSLA
+     *
+     * @param  mixed $value
+     * @return bool
+     */
+    public function color($value)
+    {
 
         $patterns = [
             'hex'   =>  '/^\#[0-9a-f]{3}([0-9a-f]{3})?$/i',
@@ -243,11 +256,12 @@ trait Validator
 
 
     /**
-    * Validate date value by the given format
-    * @param string $value
-    * @param string $format
-    * @return bool
-    */
+     * Validate date value by the given format
+     *
+     * @param  string $value
+     * @param  string $format
+     * @return bool
+     */
     public function date($value, $format = 'Y-m-d H:i:s')
     {
         $d = \DateTime::createFromFormat($format, $value);
@@ -256,25 +270,26 @@ trait Validator
 
 
     /**
-    * Validate lang alpha2 code value
-    * As the options, an encoded ISO-639 array is required
-    * JSON sample:
-    * [{
-    *     "name": "English",
-    *     "alpha2": "en",
-    *     "alpha3-b": "eng"
-    * }]
-    * @param mixed $value
-    * @param array $options
-    * @return bool
-    */
+     * Validate lang alpha2 code value
+     * As the options, an encoded ISO-639 array is required
+     * JSON sample:
+     * [{
+     *     "name": "English",
+     *     "alpha2": "en",
+     *     "alpha3-b": "eng"
+     * }]
+     *
+     * @param  mixed $value
+     * @param  array $options
+     * @return bool
+     */
     public function lang($value, $options = []): bool
     {
         $langs = ark($options, 'langs', []);
 
         if (array_search($value['alpha2'], array_column($langs, 'alpha2')) !== false) {
 
-           return true;
+            return true;
         }
 
         return false;
@@ -282,24 +297,27 @@ trait Validator
 
 
     /**
-    * Validate string password value, optional security level and minimal password length
-    * If password meets all requirements, 0 is returned, 0 means ok
-    * Otherwise, the first unmet security level is returned
-    * There is an option $occurs, which means how many current characters are required
-    * @param mixed $value
-    * @param array $options
-    * @return bool
-    */
+     * Validate string password value, optional security level and minimal password length
+     * If password meets all requirements, 0 is returned, 0 means ok
+     * Otherwise, the first unmet security level is returned
+     * There is an option $occurs, which means how many current characters are required
+     *
+     * @param  mixed $value
+     * @param  array $options
+     * @return bool
+     */
     public function password($value, $options = []): bool
     {
         $level = (int)ark($options, 'level', 3);
         $min = (int)ark($options, 'min', 6);
-        $occurs = (array)ark($options, 'occurs', [
+        $occurs = (array)ark(
+            $options, 'occurs', [
             2 => 1,
             3 => 1,
             4 => 1,
             5 => 1,
-        ]);
+            ]
+        );
 
         /*
         | eReg explained + levels:
@@ -324,28 +342,28 @@ trait Validator
 
             switch ($i) {
 
-                case 1: // require only specified length aka PIN
+            case 1: // require only specified length aka PIN
 
-                    $ereg .= '(?=\S{'.$min.',})';
-                    break;
-                case 2: // +require lowercase letter
+                $ereg .= '(?=\S{'.$min.',})';
+                break;
+            case 2: // +require lowercase letter
 
-                    $ereg .= '(?='.str_repeat('\S*[a-z]', (int)ark($occurs, 2, 1)).')';
-                    break;
-                case 3: // +require number
+                $ereg .= '(?='.str_repeat('\S*[a-z]', (int)ark($occurs, 2, 1)).')';
+                break;
+            case 3: // +require number
 
-                    $ereg .= '(?='.str_repeat('\S*[\d]', (int)ark($occurs, 3, 1)).')';
-                    break;
-                case 4: // +require uppercase letter
+                $ereg .= '(?='.str_repeat('\S*[\d]', (int)ark($occurs, 3, 1)).')';
+                break;
+            case 4: // +require uppercase letter
 
-                    $ereg .= '(?='.str_repeat('\S*[A-Z]', (int)ark($occurs, 4, 1)).')';
-                    break;
-                default: // 5 +require special character (non-word characters)
+                $ereg .= '(?='.str_repeat('\S*[A-Z]', (int)ark($occurs, 4, 1)).')';
+                break;
+            default: // 5 +require special character (non-word characters)
 
-                    $ereg .= '(?='.str_repeat('\S*[\W]', (int)ark($occurs, 5, 1)).')';
+                $ereg .= '(?='.str_repeat('\S*[\W]', (int)ark($occurs, 5, 1)).')';
             }
 
-            if (!preg_match_all( '$\S*'.$ereg.'\S*$', $value)) {
+            if (!preg_match_all('$\S*'.$ereg.'\S*$', $value)) {
                 return false;
             }
         }

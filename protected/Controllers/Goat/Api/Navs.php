@@ -5,11 +5,11 @@ use GoatCore\GoatCore;
 use GoatCore\DbAssets\DbAssets;
 
 /**
-* Navs - Navs API controller
-*
-* @author Jan Prochazka aka prochor <prochor666@gmail.com>
-* @version 1.0
-*/
+ * Navs - Navs API controller
+ *
+ * @author  Jan Prochazka aka prochor <prochor666@gmail.com>
+ * @version 1.0
+ */
 
 class Navs implements IApiController
 {
@@ -22,6 +22,8 @@ class Navs implements IApiController
     protected $method;
 
     protected $data;
+
+    protected $validatorService;
 
     public function __construct(GoatCore $app)
     {
@@ -38,48 +40,50 @@ class Navs implements IApiController
     {
         $this->model = new NavsModel($this->app, new DbAssets('navs'));
         $route = $this->app->store->entry('GoatCore\Http\Route');
+        $this->validatorService = $this->app->store->entry('Goat\Validator');
 
         switch (strtolower($this->method)) {
 
-            case 'post':
-                // Create
-                $input = !empty($_POST) ? $_POST: json_decode(file_get_contents('php://input'), true);
-                $this->data = $this->model->create($input);
-                break;
+        case 'post':
+            // Create
+            $input = !empty($_POST) ? $_POST: json_decode(file_get_contents('php://input'), true);
+            $this->data = $this->model->create($input);
+            break;
 
-            case 'put':
-                // Update full dataset
-                $id = (int)$route->index($route->count() - 1);
-                $input = json_decode(file_get_contents('php://input'), true);
-                $this->data = $this->model->update($id, $input);
-                break;
+        case 'put':
+            // Update full dataset
+            $id = (int)$route->index($route->count() - 1);
+            $input = json_decode(file_get_contents('php://input'), true);
+            $this->data = $this->model->update($id, $input);
+            break;
 
-            case 'patch':
-                // Update partial
-                $id = (int)$route->index($route->count() - 1);
-                $input = json_decode(file_get_contents('php://input'), true);
-                $this->data = $this->model->patch($id, $input);
-                break;
+        case 'patch':
+            // Update partial
+            $id = (int)$route->index($route->count() - 1);
+            $input = json_decode(file_get_contents('php://input'), true);
+            $this->data = $this->model->patch($id, $input);
+            break;
 
-            case 'delete':
-                // Remove nav
-                $id = (int)$route->index($route->count() - 1);
-                $input = json_decode(file_get_contents('php://input'), true);
-                $this->data = $this->model->delete($id, ark($input, 'soft', true));
-                break;
+        case 'delete':
+            // Remove nav
+            $id = (int)$route->index($route->count() - 1);
+            $input = json_decode(file_get_contents('php://input'), true);
+            $this->data = $this->model->delete($id, ark($input, 'soft', true));
+            break;
 
-            default:
-                $id = (int)$route->index($route->count() - 1);
+        default:
+            $id = (int)$route->index($route->count() - 1);
 
-                if ($id > 0) {
+            if ($route->count() === 3) {
 
-                    $this->data = $this->model->one($id);
-                    $this->data = $this->model->metaService->attach($this->data, 'navs');
-                } else {
+                $this->data = $this->model->one((int)$id);
+                $this->data = $this->model->metaService->attach($this->data, 'navs');
 
-                    $input = !empty($_GET) ? $_GET: [];
-                    $this->data = $this->model->findRelated($input);
-                }
+            } else {
+
+                $input = !empty($_GET) ? $_GET: [];
+                $this->data = $this->model->findRelated($input);
+            }
         }
 
         return $this;
