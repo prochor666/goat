@@ -11,7 +11,7 @@ use GoatCore\GoatCore;
 */
 class HelpersModel
 {
-    protected $app, $langService, $storageService, $resources;
+    protected $app, $langService, $storageService, $resources, $predefined;
 
     public function __construct(GoatCore $app)
     {
@@ -20,7 +20,7 @@ class HelpersModel
         $this->langService = $this->app->store->entry('Goat\Lang');
         $this->storageService = $this->app->store->entry('Goat\Storage');
         $this->resources = [
-            'langFile' => $this->app->config('fsRoot') . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'ISO-639.json',
+            'langFile' => $this->app->config('fsRoot') . '/config/ISO-639.json',
         ];
     }
 

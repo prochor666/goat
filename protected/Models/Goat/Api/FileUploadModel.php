@@ -15,7 +15,7 @@ class FileUploadModel extends BasicAssetModel
 {
     use \GoatCore\Traits\Disk;
 
-    protected $file, $storageService, $thumbService;
+    protected $file, $storageService, $thumbService, $nativeErrorMessages;
 
     public function __construct(GoatCore $app, DbAssets $assets)
     {
@@ -329,12 +329,12 @@ class FileUploadModel extends BasicAssetModel
             && $chunkSize > 0
         ) {
 
-            $uploadDir = $this->storageService->for($domains_id, 'public') . DIRECTORY_SEPARATOR . 'content' . DIRECTORY_SEPARATOR . $path;
-            $tempDir = $this->storageService->for($domains_id, 'temp') . DIRECTORY_SEPARATOR . 'uploads';
-            $cacheDir = $this->storageService->for($domains_id, 'cache') . DIRECTORY_SEPARATOR . $path;
+            $uploadDir = $this->storageService->endpoint($domains_id, 'public') . '/content/' . $path;
+            $tempDir = $this->storageService->endpoint($domains_id, 'temp') . '/uploads';
+            $cacheDir = $this->storageService->endpoint($domains_id, 'cache') . '/' . $path;
 
-            $uploadFile = $uploadDir. DIRECTORY_SEPARATOR . $basename;
-            $tempFile = $tempDir. DIRECTORY_SEPARATOR . $basename . '.' . $token . '.temporary';
+            $uploadFile = $uploadDir. '/' . $basename;
+            $tempFile = $tempDir. '/' . $basename . '.' . $token . '.temporary';
 
             $this->makeDir($uploadDir);
             $this->makeDir($tempDir);
@@ -431,9 +431,9 @@ class FileUploadModel extends BasicAssetModel
             ];
         }
 
-        $fullPath = $this->storageService->for($exists->domains_id, 'content') . DIRECTORY_SEPARATOR . $exists->path . DIRECTORY_SEPARATOR . $exists->basename;
+        $fullPath = $this->storageService->endpoint($exists->domains_id, 'content') . '/' . $exists->path . '/' . $exists->basename;
 
-        $cacheDir = $this->storageService->for($exists->domains_id, 'cache') . DIRECTORY_SEPARATOR . $exists->path;
+        $cacheDir = $this->storageService->endpoint($exists->domains_id, 'cache') . '/' . $exists->path;
 
 
         $this->fileClearCache($fullPath, $cacheDir);

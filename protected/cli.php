@@ -4,12 +4,12 @@ use GoatCore\Base\Store;
 use GoatCore\GoatCore;
 
 Autoloader::init()->register([
-    GOAT_ROOT . DIRECTORY_SEPARATOR . 'protected' . DIRECTORY_SEPARATOR . 'Controllers',
-    GOAT_ROOT . DIRECTORY_SEPARATOR . 'protected' . DIRECTORY_SEPARATOR . 'Models',
-    GOAT_ROOT . DIRECTORY_SEPARATOR . 'protected' . DIRECTORY_SEPARATOR . 'Views',
-    GOAT_ROOT . DIRECTORY_SEPARATOR . 'protected' . DIRECTORY_SEPARATOR . 'Interfaces',
-    GOAT_ROOT . DIRECTORY_SEPARATOR . 'protected' . DIRECTORY_SEPARATOR . 'Traits',
-    GOAT_ROOT . DIRECTORY_SEPARATOR . 'protected' . DIRECTORY_SEPARATOR . 'Services',
+    GOAT_ROOT . '/protected/Controllers',
+    GOAT_ROOT . '/protected/Models',
+    GOAT_ROOT . '/protected/Views',
+    GOAT_ROOT . '/protected/Interfaces',
+    GOAT_ROOT . '/protected/Traits',
+    GOAT_ROOT . '/protected/Services',
 ]);
 
 use Goat\Cmd;
@@ -18,7 +18,7 @@ date_default_timezone_set('UTC');
 
 $goatCore = new GoatCore(new Store);
 
-$appConfigRoot = $goatCore->config('fsRoot').DIRECTORY_SEPARATOR.'config';
+$appConfigRoot = $goatCore->config('fsRoot') . '/config';
 $appConfigFiles = [
     'app-config.php',
     'db-config.php',
@@ -27,16 +27,16 @@ $appConfigFiles = [
 
 foreach($appConfigFiles as $cf) {
 
-    if (file_exists($appConfigRoot.DIRECTORY_SEPARATOR.$cf)) {
+    if (file_exists("{$appConfigRoot}/{$cf}")) {
 
-        require_once($appConfigRoot.DIRECTORY_SEPARATOR.$cf);
+        require_once("{$appConfigRoot}/{$cf}");
     }
 }
 
 $goatCore->config($config);
 
 // Handle commandline options
-require_once(__DIR__.DIRECTORY_SEPARATOR.'loader.php');
+require_once(__DIR__ . '/loader.php');
 cliLoader($goatCore, $argv);
 
 /* ***************

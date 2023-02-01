@@ -38,7 +38,7 @@ class ImageInfoModel
             $this->imageService->fixExifRotation = false;
             $this->imageService->clearMeta = false;
             $this->imageService->load($image);
-            $this->imageService->imageTarget = $this->app->config('fsRoot') . DIRECTORY_SEPARATOR . 'temp' . DIRECTORY_SEPARATOR . 'conv.' . $this->imageService->type();
+            $this->imageService->imageTarget = $this->app->config('fsRoot') . '/temp/conv.' . $this->imageService->type();
 
             $this->imageService->resizeToHeight(200);
             $this->imageService->save();

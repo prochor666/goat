@@ -58,8 +58,8 @@ class DirectoryModel extends BasicAssetModel
         ];
 
         $cacheDir = str_replace(
-            $this->storageService->for($domain->id, 'content'),
-            $this->storageService->for($domain->id, 'cache'),
+            $this->storageService->endpoint($domain->id, 'content'),
+            $this->storageService->endpoint($domain->id, 'cache'),
             $dir['path']);
 
         $this->makeDir($cacheDir);
@@ -69,6 +69,7 @@ class DirectoryModel extends BasicAssetModel
             $item['rel'] = $path !== '' ? $path.'/'.basename($item['path']): basename($item['path']);
             $item['basename'] = basename($item['path']);
             $item['http'] = $this->storageService->httpPath($item['path']);
+            $item['pathOrigin'] = $dir['path'];
 
             if ($item['type'] === 'dir') {
 
@@ -130,7 +131,7 @@ class DirectoryModel extends BasicAssetModel
             ];
         }
 
-        $dir = $this->storageService->for($input['domains_id'], 'content') . DIRECTORY_SEPARATOR . $this->storageService->enumeratePath(ark($input, 'path', ''));
+        $dir = $this->storageService->endpoint($input['domains_id'], 'content') . '/' . $this->storageService->enumeratePath(ark($input, 'path', ''));
 
         $result = $this->makeDir($dir);
 
@@ -159,9 +160,9 @@ class DirectoryModel extends BasicAssetModel
             ];
         }
 
-        $from = $this->storageService->for($domains_id, 'public') . DIRECTORY_SEPARATOR . $this->storageService->enumeratePath(ark($input, 'from', ''));
+        $from = $this->storageService->endpoint($domains_id, 'public') . '/' . $this->storageService->enumeratePath(ark($input, 'from', ''));
 
-        $to = $this->storageService->for($domains_id, 'public') . DIRECTORY_SEPARATOR . $this->storageService->enumeratePath(ark($input, 'to', ''));
+        $to = $this->storageService->endpoint($domains_id, 'public') . '/' . $this->storageService->enumeratePath(ark($input, 'to', ''));
 
         $result = $this->moveDir($from, $to);
 
@@ -194,7 +195,7 @@ class DirectoryModel extends BasicAssetModel
             ];
         }
 
-        $target = $this->storageService->for($domains_id, 'content') . DIRECTORY_SEPARATOR . $this->storageService->enumeratePath(ark($input, 'target', ''));
+        $target = $this->storageService->endpoint($domains_id, 'content') . '/' . $this->storageService->enumeratePath(ark($input, 'target', ''));
 
         $files = ark($input, 'files', []);
         $dirs = ark($input, 'dirs', []);
@@ -213,15 +214,15 @@ class DirectoryModel extends BasicAssetModel
 
                     foreach ($dirs as $dir) {
 
-                        $src = $this->storageService->for($domains_id, 'content') . DIRECTORY_SEPARATOR . $this->storageService->enumeratePath($dir);
+                        $src = $this->storageService->endpoint($domains_id, 'content') . '/' . $this->storageService->enumeratePath($dir);
 
                         switch ($action) {
                             case 'copy':
-                                $result[$dir] = $this->copyDir($src, $target . DIRECTORY_SEPARATOR . basename($src));
+                                $result[$dir] = $this->copyDir($src, $target . '/' . basename($src));
                                 break;
 
                             case 'move':
-                                $result[$dir] = $this->moveDir($src, $target . DIRECTORY_SEPARATOR . basename($src));
+                                $result[$dir] = $this->moveDir($src, $target . '/' . basename($src));
                                 break;
 
                             case 'delete':
@@ -235,15 +236,15 @@ class DirectoryModel extends BasicAssetModel
 
                     foreach ($files as $file) {
 
-                        $src = $this->storageService->for($domains_id, 'content') . DIRECTORY_SEPARATOR . $this->storageService->enumeratePath($file);
+                        $src = $this->storageService->endpoint($domains_id, 'content') . '/' . $this->storageService->enumeratePath($file);
 
                         switch ($action) {
                             case 'copy':
-                                $result[$file] = $this->copyFile($src, $target . DIRECTORY_SEPARATOR . basename($file));
+                                $result[$file] = $this->copyFile($src, $target . '/' . basename($file));
                                 break;
 
                             case 'move':
-                                $result[$file] = $this->moveFile($src, $target . DIRECTORY_SEPARATOR . basename($file));
+                                $result[$file] = $this->moveFile($src, $target . '/' . basename($file));
                                 break;
 
                             case 'delete':
@@ -335,7 +336,7 @@ class DirectoryModel extends BasicAssetModel
             ];
         }
 
-        $dir = $this->storageService->for($domains_id, 'public') . DIRECTORY_SEPARATOR . $this->storageService->enumeratePath(ark($input, 'path', ''));
+        $dir = $this->storageService->endpoint($domains_id, 'public') . '/' . $this->storageService->enumeratePath(ark($input, 'path', ''));
 
         $result = false; //$this->deleteDir($dir);
 

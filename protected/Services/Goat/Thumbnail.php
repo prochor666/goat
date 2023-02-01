@@ -21,7 +21,7 @@ class Thumbnail
 
         foreach($this->config['sizes'] as $prefix => $size) {
 
-            $cacheFile = $cacheDir . DIRECTORY_SEPARATOR . $prefix . '-' .basename($path);
+            $cacheFile = $cacheDir . '/' . $prefix . '-' .basename($path);
             $result[$prefix] = $this->isFile($cacheFile) ? $this->storageService->httpPath($cacheFile): false;
         }
 
@@ -41,7 +41,7 @@ class Thumbnail
 
                     $this->imageService->compression = $size[1];
 
-                    $this->imageService->imageTarget = $cacheDir . DIRECTORY_SEPARATOR . $prefix . '-' .basename($path);
+                    $this->imageService->imageTarget = $cacheDir . '/' . $prefix . '-' .basename($path);
 
                     if (!$this->isFile($this->imageService->imageTarget)) {
 
@@ -58,7 +58,7 @@ class Thumbnail
     {
         foreach($this->config['sizes'] as $prefix => $size) {
 
-            $this->deleteFile($cacheDir . DIRECTORY_SEPARATOR . $prefix . '-' .basename($path));
+            $this->deleteFile($cacheDir . '/' . $prefix . '-' .basename($path));
         }
     }
 }

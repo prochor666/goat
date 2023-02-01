@@ -353,7 +353,7 @@ trait Disk {
 
                 if (( $o !== '.' ) && ( $o !== '..' )) {
 
-                    $fsObj = $path . DIRECTORY_SEPARATOR . $o;
+                    $fsObj = $path . '/' . $o;
 
                     if ($this->isDir($fsObj)) {
 
@@ -393,7 +393,7 @@ trait Disk {
 
                 if (( $o != '.' ) && ( $o != '..' )) {
 
-                    $fsObj = $path . DIRECTORY_SEPARATOR . $o;
+                    $fsObj = $path . '/' . $o;
 
                     if ($this->isDir($fsObj)) {
 
@@ -456,7 +456,7 @@ trait Disk {
 
                 if (( $o != '.' ) && ( $o != '..' )) {
 
-                    $fsObj = $path . DIRECTORY_SEPARATOR . $o;
+                    $fsObj = $path . '/' . $o;
 
                     if ($this->isDir($fsObj)) {
 
@@ -517,8 +517,8 @@ trait Disk {
                     //$fsObj = "{$pathFrom}/{$o}";
                     //$fsObjTarget = "{$pathTo}/{$o}";
 
-                    $fsObj = $pathFrom . DIRECTORY_SEPARATOR . $o;
-                    $fsObjTarget = $pathTo . DIRECTORY_SEPARATOR . $o;
+                    $fsObj = $pathFrom . '/' . $o;
+                    $fsObjTarget = $pathTo . '/' . $o;
 
                     if ($this->isDir($fsObj)) {
 

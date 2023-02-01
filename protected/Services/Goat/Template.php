@@ -17,7 +17,7 @@ class Template
     {
         $loader = new \Twig\Loader\FilesystemLoader(dirname($template));
         $twig = new \Twig\Environment($loader, [
-            'cache' => $this->storageService->for($domains_id, 'cache'),
+            'cache' => $this->storageService->endpoint($domains_id, 'cache'),
         ]);
 
         $template = $twig->load($template);

@@ -13,7 +13,7 @@ class Storage
     }
 
 
-    public function for($domains_id, $endpoint): string
+    public function endpoint($domains_id, $endpoint): string
     {
         // Domain storage endpoints
         $endpoints = [
@@ -25,14 +25,12 @@ class Storage
             'templates' => ['storage', 'sites', $domains_id, 'templates'],
         ];
 
-        return $this->root . DIRECTORY_SEPARATOR . $this->enumeratePath(ark($endpoints, $endpoint, $endpoints['temp']));
+        return $this->enumeratePath(ark($endpoints, $endpoint, $endpoints['temp']));
     }
 
 
     public function dir($domains_id, $relativePath = '', $type = 'public'): array
     {
-
-
         $data =  [
             'status' => false,
             'dir'   => [],
@@ -43,35 +41,35 @@ class Storage
 
         if ($type === 'content') {
 
-            $dir = $this->for($domains_id, 'public') . DIRECTORY_SEPARATOR . 'content' . DIRECTORY_SEPARATOR . $this->enumeratePath($relativePath);
+            $dir = $this->endpoint($domains_id, 'public').'/content/'.$this->enumeratePath($relativePath);
         }
 
 
         if ($type === 'cache') {
 
-            $dir = $this->for($domains_id, 'public') . DIRECTORY_SEPARATOR . 'cache' . $this->enumeratePath($relativePath);
+            $dir = $this->endpoint($domains_id, 'public').'/cache/'.$this->enumeratePath($relativePath);
         }
 
 
         if ($type === 'public') {
 
-            $dir = $this->for($domains_id, 'public') . DIRECTORY_SEPARATOR . $this->enumeratePath($relativePath);
+            $dir = $this->endpoint($domains_id, 'public').'/'.$this->enumeratePath($relativePath);
         }
 
 
         if ($type === 'storage') {
 
-            $dir = $this->for($domains_id, 'storage') . DIRECTORY_SEPARATOR . $this->enumeratePath($relativePath);
+            $dir = $this->endpoint($domains_id, 'storage').'/'.$this->enumeratePath($relativePath);
         }
 
         if ($type === 'temp') {
 
-            $dir = $this->for($domains_id, 'temp') . DIRECTORY_SEPARATOR . $this->enumeratePath($relativePath);
+            $dir = $this->endpoint($domains_id, 'temp').'/'.$this->enumeratePath($relativePath);
         }
 
         if ($dir !== false) {
 
-            $dir = trim($dir, '\\');
+            //$dir = trim($dir, '\\');
 
             if ($this->isDir($dir)) {
 
@@ -91,8 +89,9 @@ class Storage
 
     public function httpPath($path): string
     {
-        $l = mb_strlen($this->root);
-        return $this->n2s(mb_substr($path, $l));
+        return $path;
+        /* $l = mb_strlen($this->root);
+        return mb_substr($path, $l); */
     }
 
 
@@ -100,9 +99,9 @@ class Storage
     {
         if (is_array($path)) {
 
-            $path = implode('/', $path);
+            return implode('/', array_filter($path));
         }
 
-        return $this->s2n($path);
+        return $path;
     }
 }
